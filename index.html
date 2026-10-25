@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر علوان للأزياء | Elwan Fashion</title>
+    <title>متجر علوان للأزياء | Elwan Fashion Store</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- خط كايرو -->
+    <!-- Google Fonts: Cairo -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
@@ -18,7 +18,7 @@
 
     <!-- شريط الإعلانات العلوي -->
     <div class="bg-black text-white text-xs py-2 px-4 flex justify-between items-center">
-        <span><i class="fa-solid fa-fire text-amber-400 ml-1"></i> خصم 20% على تشكيلة الموسم الجديد بكود: <b>ELWAN20</b></span>
+        <span><i class="fa-solid fa-fire text-amber-400 ml-1"></i> خصم 20% على كولكشن الموسم الجديد بكود: <b>ELWAN20</b></span>
         <div class="hidden sm:flex items-center gap-4 text-[11px] text-zinc-300">
             <span><i class="fa-solid fa-rotate-left ml-1"></i> استبدال واسترجاع مجاني خلال 14 يوم</span>
             <span>|</span>
@@ -30,8 +30,8 @@
     <header class="bg-white/95 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             
-            <!-- اللوجو (اضغط عليه 3 مرات متتالية لفتح بوابة الأدمن السرية) -->
-            <div class="flex items-center gap-3 cursor-pointer select-none" onclick="handleLogoSecretClick()">
+            <!-- الشعار (اضغط عليه 3 مرات متتالية للدخول كأدمن) -->
+            <div class="flex items-center gap-3 cursor-pointer select-none" onclick="handleSecretLogoClick()" title="متجر علوان">
                 <div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
                     E
                 </div>
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <!-- البحث عن المنتجات -->
+            <!-- محرك البحث -->
             <div class="hidden md:flex flex-1 max-w-md mx-8">
                 <div class="relative w-full">
                     <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="ابحث عن هودي، قميص، بنطلون، سنيكرز..." class="w-full bg-zinc-100 border-none rounded-full py-2 pr-10 pl-4 text-xs font-medium focus:ring-2 focus:ring-black outline-none">
@@ -49,12 +49,18 @@
                 </div>
             </div>
 
-            <!-- أزرار الزائر / العميل فقط -->
+            <!-- أزرار الواجهة (للعملاء فقط) -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <!-- زر دخول العميل فقط (لا يرى خيار الأدمن هنا إطلاقاً) -->
-                <button onclick="openCustomerAuthModal()" id="customerAuthBtn" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition">
+                <!-- زر يظهر فقط لك إذا كنت مسجل كأدمن للانتقال السريع للوحة -->
+                <button onclick="switchView('admin')" id="adminQuickBtn" class="hidden bg-amber-500 hover:bg-amber-600 text-black px-3.5 py-2 rounded-full text-xs font-extrabold items-center gap-1.5 transition shadow">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>لوحة تحكمي</span>
+                </button>
+
+                <!-- زر تسجيل حساب / دخول للعميل فقط -->
+                <button onclick="handleUserBtnClick()" id="customerAuthBtn" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition">
                     <i class="fa-regular fa-user"></i>
-                    <span id="customerBtnText">تسجيل العميل</span>
+                    <span id="customerBtnText">حسابي / دخول</span>
                 </button>
 
                 <!-- سلة المشتريات -->
@@ -67,17 +73,17 @@
     </header>
 
     <!-- ============================================== -->
-    <!-- الواجهة الرئيسية للمتجر (واجهة الزبائن) -->
+    <!-- الواجهة الرئيسية للمتجر (Store Front) -->
     <!-- ============================================== -->
     <main id="storeView" class="container mx-auto px-4 py-6 flex-1">
         
         <!-- بنر ترويجي كولكشن أزياء -->
         <section class="relative bg-zinc-950 text-white rounded-3xl overflow-hidden p-8 md:p-12 mb-8 flex flex-col justify-center shadow-lg">
             <div class="max-w-xl z-10">
-                <span class="text-xs uppercase tracking-widest font-bold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full">تشكيلة الموسم الجديد 2026</span>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full">تشكيلة الموسم الجديد</span>
                 <h1 class="text-3xl md:text-5xl font-black mt-4 mb-3 leading-tight">ملابس تعكس تميزك بأعلى خامات القطن</h1>
-                <p class="text-zinc-400 text-sm mb-6 font-medium">أحدث صيحات الهوديز، القمصان، البناطيل، والأحذية العصرية بجودة تدوم وتوصيل حتى باب المنزل.</p>
-                <a href="#productsSection" class="bg-white text-black hover:bg-zinc-200 font-bold px-7 py-3 rounded-full text-sm transition inline-block">تسوق الآن</a>
+                <p class="text-zinc-400 text-sm mb-6 font-medium">أحدث صيحات الهوديز، القمصان، البناطيل، والأحذية العصرية بتفصيل دقيق وجودة تدوم.</p>
+                <a href="#productsSection" class="bg-white text-black hover:bg-zinc-200 font-bold px-7 py-3 rounded-full text-sm transition inline-block">تصفح المنتجات</a>
             </div>
         </section>
 
@@ -103,28 +109,28 @@
     </main>
 
     <!-- ============================================== -->
-    <!-- لوحة تحكم الأدمن (محمية ومخصصة لك أنت فقط) -->
+    <!-- لوحة تحكم الأدمن (محمية وخاصة بك أنت فقط) -->
     <!-- ============================================== -->
     <section id="adminView" class="hidden container mx-auto px-4 py-8 flex-1">
-        <div class="bg-amber-500/10 border border-amber-500/30 text-amber-900 p-4 rounded-2xl mb-6 text-xs font-bold flex flex-col sm:flex-row gap-2 justify-between items-center">
-            <span><i class="fa-solid fa-lock text-amber-600 ml-1.5"></i> لوحة الإدارة والفلوس محمية ومخصصة لصاحب المتجر فقط.</span>
+        <div class="bg-amber-500/10 border border-amber-500/30 text-amber-950 p-4 rounded-2xl mb-6 text-xs font-bold flex flex-col sm:flex-row gap-3 justify-between items-center">
+            <span><i class="fa-solid fa-lock text-amber-600 ml-1.5"></i> هذه المنطقة مخصصة لمالك المتجر فقط لمتابعة الأرباح وإدارة المخزن.</span>
             <div class="flex gap-2">
-                <button onclick="switchView('store')" class="bg-zinc-200 hover:bg-zinc-300 text-zinc-800 px-3.5 py-1.5 rounded-lg text-xs font-bold">معاينة المتجر</button>
-                <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold">قفل الإدارة والخروج</button>
+                <button onclick="switchView('store')" class="bg-zinc-200 hover:bg-zinc-300 text-zinc-900 px-4 py-2 rounded-xl text-xs font-bold transition">معاينة المتجر</button>
+                <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition">قفل الإدارة والخروج</button>
             </div>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-                <h2 class="text-2xl font-black text-zinc-900">لوحة تحكم المتجر والأرباح</h2>
-                <p class="text-zinc-500 text-xs">متابعة الفلوس والمبيعات، فواتير العملاء، وإضافة قطع ملابس جديدة مع رفع الصور</p>
+                <h2 class="text-2xl font-black text-zinc-900">لوحة تحكم المتجر والفلوس</h2>
+                <p class="text-zinc-500 text-xs">إدارة أرباح المبيعات، فواتير العملاء، وإضافة قطع ملابس جديدة مع رفع الصور</p>
             </div>
-            <button onclick="openAddProductModal()" class="bg-black hover:bg-zinc-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow">
+            <button onclick="openAddProductModal()" class="bg-black hover:bg-zinc-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow">
                 <i class="fa-solid fa-plus"></i> إضافة قطعة ملابس جديدة
             </button>
         </div>
 
-        <!-- بطاقات الإحصائيات المالية (الفلوس) -->
+        <!-- الإحصائيات المالية (الفلوس والمبيعات) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
             <div class="bg-white p-5 rounded-2xl border border-zinc-200 shadow-sm">
                 <span class="text-zinc-400 text-xs font-bold block mb-1">إجمالي الفلوس (المبيعات)</span>
@@ -135,12 +141,12 @@
                 <span id="statOrdersCount" class="text-2xl font-black text-zinc-900">0 طلب</span>
             </div>
             <div class="bg-white p-5 rounded-2xl border border-zinc-200 shadow-sm">
-                <span class="text-zinc-400 text-xs font-bold block mb-1">عدد الموديلات في المخزن</span>
+                <span class="text-zinc-400 text-xs font-bold block mb-1">الموديلات المتوفرة في المخزن</span>
                 <span id="statProductsCount" class="text-2xl font-black text-zinc-900">0 موديل</span>
             </div>
         </div>
 
-        <!-- جدول فواتير وطلبات العملاء -->
+        <!-- جدول فواتير ومبيعات العملاء -->
         <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden mb-8 shadow-sm">
             <div class="p-4 border-b border-zinc-100 font-bold text-sm text-zinc-800">
                 سجل المبيعات والمدفوعات الخاصة بالعملاء
@@ -150,9 +156,9 @@
                     <thead class="bg-zinc-50 text-zinc-500 font-bold">
                         <tr>
                             <th class="p-3">رقم الطلب</th>
-                            <th class="p-3">اسم العميل</th>
+                            <th class="p-3">العميل</th>
                             <th class="p-3">الهاتف والعنوان</th>
-                            <th class="p-3">القطع والمقاس</th>
+                            <th class="p-3">القطع والمقاسات</th>
                             <th class="p-3">طريقة الدفع</th>
                             <th class="p-3">المبلغ</th>
                             <th class="p-3">الحالة</th>
@@ -201,7 +207,7 @@
                 </div>
                 
                 <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
-                    <!-- يتم العرض عبر JS -->
+                    <!-- عناصر السلة -->
                 </div>
 
                 <div class="p-4 border-t bg-zinc-50 space-y-3">
@@ -299,7 +305,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- نافذة إضافة ملابس جديدة ورفع الصور (خاصة بالمالك) -->
+    <!-- نافذة إضافة ملابس جديدة ورفع الصور (للأدمن فقط) -->
     <!-- ============================================== -->
     <div id="addProductModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -361,7 +367,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- نافذة تسجيل دخول العملاء فقط (الزبائن) -->
+    <!-- نافذة تسجيل العملاء فقط (الزبائن) -->
     <!-- ============================================== -->
     <div id="customerModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
@@ -369,27 +375,31 @@
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
             <div class="text-center mb-5">
-                <h3 class="text-xl font-black">حساب العميل</h3>
-                <p class="text-xs text-zinc-400 mt-1">سجل بياناتك لمتابعة مشترياتك وطلباتك</p>
+                <h3 class="text-xl font-black text-zinc-900">حساب العميل</h3>
+                <p class="text-xs text-zinc-400 mt-1">سجل حسابك كعميل لمتابعة طلبياتك ومشترياتك</p>
             </div>
-            <form onsubmit="handleCustomerLogin(event)" class="space-y-3">
+            <form onsubmit="handleCustomerAuth(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold text-zinc-600 mb-1">الاسم بالكامل</label>
-                    <input type="text" id="clientNameInput" required placeholder="محمد أحمد" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
+                    <input type="text" id="custAuthName" required placeholder="محمد أحمد" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-zinc-600 mb-1">رقم الهاتف (للتواصل والشحن)</label>
-                    <input type="tel" id="clientPhoneInput" required placeholder="010XXXXXXXX" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">البريد الإلكتروني للعميل</label>
+                    <input type="email" id="custAuthEmail" required placeholder="client@example.com" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">كلمة المرور</label>
+                    <input type="password" id="custAuthPass" required placeholder="••••••••" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <button type="submit" class="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs transition">
-                    دخول كعميل
+                    تسجيل الدخول كعميل
                 </button>
             </form>
         </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- بوابة دخول المالك السرية فقط (Secret Admin Gate) -->
+    <!-- بوابة الدخول السرية الخاصة بالمالك / الأدمن فقط -->
     <!-- ============================================== -->
     <div id="adminGateModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative border-2 border-amber-500">
@@ -400,10 +410,472 @@
                 <div class="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl font-bold">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <h3 class="text-lg font-black text-zinc-900">تسجيل دخول مالك المتجر</h3>
-                <p class="text-xs text-zinc-400 mt-0.5">منطقة محظورة مخصصة للإدارة فقط</p>
+                <h3 class="text-lg font-black text-zinc-900">منطقة مالك المتجر فقط</h3>
+                <p class="text-xs text-zinc-400 mt-0.5">أدخل البريد وكلمة السر السرية للوصول للأرباح والإدارة</p>
             </div>
             <form onsubmit="verifyAdminCredentials(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-zinc-600 mb-1">بريد المالك</label>
-                    <input type="email" id="adminEmailInput" required placeholder="admin@elwan.com" class="w-full border
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">بريد المالك السري</label>
+                    <input type="email" id="adminEmailInput" required placeholder="admin@elwan.com" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">كلمة المرور السرية</label>
+                    <input type="password" id="adminPassInput" required placeholder="••••••••" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
+                </div>
+                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl text-xs transition shadow">
+                    تحقق والدخول للوحة التحكم
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- الفوتر مع رابط الإدارة السري -->
+    <footer class="bg-white border-t border-zinc-200 py-6 mt-12 text-center text-xs text-zinc-500">
+        <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <span>جميع الحقوق محفوظة © متجر علوان للأزياء</span>
+            <!-- رابط سري للمالك -->
+            <button onclick="openAdminGateModal()" class="text-zinc-300 hover:text-zinc-600 text-[11px] transition">
+                <i class="fa-solid fa-lock text-[10px]"></i> دخول الإدارة
+            </button>
+        </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- كود جافاسكريبت والأمان بالكامل -->
+    <!-- ============================================== -->
+    <script>
+        // ==========================================
+        // بيانات الاعتماد السرية الخاصة بك فقط كأدمن:
+        // (يمكنك تغييرها من هنا متى شئت)
+        // ==========================================
+        const MASTER_ADMIN_EMAIL = "admin@elwan.com";
+        const MASTER_ADMIN_PASS  = "admin123";
+
+        // المنتجات المبدئية
+        const initialClothes = [
+            { id: 1, name: "هودي أوفر سايز أسود قطن 100%", price: 590, category: "هوديز وجواكت", sizes: ["M", "L", "XL"], image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80" },
+            { id: 2, name: "قميص كاجوال بيج كلاسيكي بقصة مريحة", price: 480, category: "رجالي", sizes: ["S", "M", "L", "XL"], image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80" },
+            { id: 3, name: "كارديجان صوف ناعم كولكشن شتوي", price: 650, category: "حريمي", sizes: ["S", "M", "L"], image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&auto=format&fit=crop&q=80" },
+            { id: 4, name: "سنيكرز رياضي أبيض كلاسيك بريميوم", price: 850, category: "أحذية وسنيكرز", sizes: ["41", "42", "43", "44"], image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop&q=80" }
+        ];
+
+        // قراءة البيانات من الذاكرة المحلية
+        let products = JSON.parse(localStorage.getItem('elwan_fashion_products')) || initialClothes;
+        let cart = JSON.parse(localStorage.getItem('elwan_fashion_cart')) || [];
+        let orders = JSON.parse(localStorage.getItem('elwan_fashion_orders')) || [];
+        
+        // جلسات المستخدمين (فصل تام بين الأدمن والعميل)
+        let isAdminLoggedIn = JSON.parse(sessionStorage.getItem('elwan_admin_session')) || false;
+        let currentCustomer = JSON.parse(localStorage.getItem('elwan_current_customer')) || null;
+
+        let currentUploadedImageBase64 = "";
+        let logoClickCounter = 0;
+        let logoClickTimer = null;
+
+        // بدء التشغيل
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            updateCartUI();
+            updateDashboardStats();
+            updateCustomerUI();
+            checkAdminBarUI();
+        });
+
+        // 1. عرض قطع الملابس
+        function renderProducts(items) {
+            const grid = document.getElementById('productsGrid');
+            document.getElementById('itemsCountLabel').innerText = `(${items.length} قطعة متوفرة)`;
+            grid.innerHTML = "";
+
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-400 font-bold">لا توجد قطع ملابس مطابقة للبحث.</div>`;
+                return;
+            }
+
+            items.forEach(p => {
+                const sizesHtml = p.sizes.map((s, idx) => `
+                    <button type="button" onclick="selectCardSize(${p.id}, '${s}', this)" class="size-btn-${p.id} px-2 py-0.5 border ${idx === 0 ? 'bg-black text-white border-black' : 'border-zinc-200'} rounded text-[10px] font-bold hover:border-black transition">
+                        ${s}
+                    </button>
+                `).join('');
+
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl border border-zinc-100 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+                        <div class="relative h-64 bg-zinc-100 overflow-hidden">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 right-3 bg-black/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-xs">${p.category}</span>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-zinc-900 text-xs sm:text-sm line-clamp-1 mb-1">${p.name}</h3>
+                                <p class="text-zinc-950 font-black text-base mb-3">${p.price.toLocaleString()} ج.م</p>
+                                
+                                <div class="mb-3">
+                                    <span class="text-[10px] font-bold text-zinc-400 block mb-1">المقاس:</span>
+                                    <div class="flex flex-wrap gap-1" id="sizesContainer_${p.id}">
+                                        ${sizesHtml}
+                                    </div>
+                                    <input type="hidden" id="selectedSize_${p.id}" value="${p.sizes[0] || 'One Size'}">
+                                </div>
+                            </div>
+                            
+                            <button onclick="addToCartFromCard(${p.id})" class="w-full bg-black hover:bg-zinc-800 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> إضافة للحقيبة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectCardSize(prodId, size, btn) {
+            document.querySelectorAll(`.size-btn-${prodId}`).forEach(b => {
+                b.classList.remove('bg-black', 'text-white', 'border-black');
+            });
+            btn.classList.add('bg-black', 'text-white', 'border-black');
+            document.getElementById(`selectedSize_${prodId}`).value = size;
+        }
+
+        function addToCartFromCard(productId) {
+            const product = products.find(p => p.id === productId);
+            const sizeInput = document.getElementById(`selectedSize_${productId}`);
+            const selectedSize = sizeInput ? sizeInput.value : (product.sizes[0] || 'M');
+
+            const existing = cart.find(item => item.id === productId && item.selectedSize === selectedSize);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, selectedSize: selectedSize, qty: 1 });
+            }
+
+            saveCart();
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        // 2. إدارة السلة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('elwan_fashion_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((acc, cur) => acc + cur.qty, 0);
+            const totalPrice = cart.reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
+
+            document.getElementById('cartCount').innerText = totalCount;
+            document.getElementById('cartTotalPrice').innerText = totalPrice.toLocaleString() + ' ج.م';
+            document.getElementById('checkoutTotalAmount').innerText = totalPrice.toLocaleString() + ' ج.م';
+
+            const container = document.getElementById('cartItemsList');
+            container.innerHTML = "";
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-zinc-400 text-xs font-bold">حقيبة التسوق فارغة حالياً</div>`;
+                return;
+            }
+
+            cart.forEach((item, idx) => {
+                container.innerHTML += `
+                    <div class="flex items-center gap-3 border-b border-zinc-100 pb-3">
+                        <img src="${item.image}" class="w-16 h-20 object-cover rounded-xl border border-zinc-200">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold text-zinc-900">${item.name}</h4>
+                            <span class="inline-block bg-zinc-100 text-zinc-800 text-[10px] font-bold px-2 py-0.5 rounded mt-1">مقاس: ${item.selectedSize}</span>
+                            <p class="text-zinc-950 font-black text-xs mt-1">${item.price.toLocaleString()} ج.م</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 bg-zinc-200 rounded flex items-center justify-center text-xs font-bold">-</button>
+                                <span class="text-xs font-bold">${item.qty}</span>
+                                <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 bg-zinc-200 rounded flex items-center justify-center text-xs font-bold">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700 p-2">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleCartDrawer(forceOpen = false) {
+            const drawer = document.getElementById('cartDrawer');
+            if (forceOpen) drawer.classList.remove('hidden');
+            else drawer.classList.toggle('hidden');
+        }
+
+        // 3. إتمام الدفع وتسجيل الفواتير
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert("حقيبة التسوق فارغة! أضف ملابس أولاً.");
+                return;
+            }
+            toggleCartDrawer(false);
+            if (currentCustomer) {
+                document.getElementById('custName').value = currentCustomer.name || '';
+            }
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function togglePaymentInputs(type) {
+            document.getElementById('cardFields').classList.toggle('hidden', type !== 'visa');
+            document.getElementById('walletFields').classList.toggle('hidden', type !== 'wallet');
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            const total = cart.reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
+            const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const methodLabel = method === 'visa' ? 'فيزا / بطاقة' : (method === 'wallet' ? 'فودافون كاش' : 'الدفع عند الاستلام');
+
+            const order = {
+                id: 'ELW-' + Math.floor(100000 + Math.random() * 900000),
+                customer: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                address: document.getElementById('custAddress').value,
+                items: cart.map(i => `${i.name} (مقاس: ${i.selectedSize} × ${i.qty})`).join('، '),
+                paymentMethod: methodLabel,
+                total: total,
+                status: 'مدفوع ومؤكد',
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            orders.unshift(order);
+            localStorage.setItem('elwan_fashion_orders', JSON.stringify(orders));
+
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCheckoutModal();
+
+            alert(`✅ شكراً لطلبك من علوان!\nتم تسجيل الطلب والدفع بنجاح.\nرقم الفاتورة: ${order.id}\nطريقة الدفع: ${methodLabel}\nالقيمة: ${total.toLocaleString()} ج.م`);
+            updateDashboardStats();
+        }
+
+        // 4. أمان الأدمن وطريقة الدخول السرية
+        function handleSecretLogoClick() {
+            logoClickCounter++;
+            clearTimeout(logoClickTimer);
+            logoClickTimer = setTimeout(() => { logoClickCounter = 0; }, 1200);
+
+            // عند الضغط 3 مرات سريعة على اللوجو تفتح نافذة المالك
+            if (logoClickCounter >= 3) {
+                logoClickCounter = 0;
+                if (isAdminLoggedIn) {
+                    switchView('admin');
+                } else {
+                    openAdminGateModal();
+                }
+            }
+        }
+
+        function openAdminGateModal() {
+            document.getElementById('adminGateModal').classList.remove('hidden');
+        }
+
+        function closeAdminGateModal() {
+            document.getElementById('adminGateModal').classList.add('hidden');
+        }
+
+        function verifyAdminCredentials(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const pass = document.getElementById('adminPassInput').value.trim();
+
+            if (email === MASTER_ADMIN_EMAIL && pass === MASTER_ADMIN_PASS) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('elwan_admin_session', JSON.stringify(true));
+                closeAdminGateModal();
+                checkAdminBarUI();
+                switchView('admin');
+                alert("👑 مرحباً بك يا مالك المتجر! تم فتح لوحة التحكم والأرباح بنجاح.");
+            } else {
+                alert("❌ خطأ: هذه البيانات غير صحيحة، الوصول محظور إلا لصاحب المتجر فقط!");
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('elwan_admin_session');
+            checkAdminBarUI();
+            switchView('store');
+            alert("تم قفل لوحة الإدارة والخروج بنجاح.");
+        }
+
+        function checkAdminBarUI() {
+            const adminBtn = document.getElementById('adminQuickBtn');
+            if (isAdminLoggedIn) {
+                adminBtn.classList.remove('hidden');
+                adminBtn.classList.add('flex');
+            } else {
+                adminBtn.classList.add('hidden');
+                adminBtn.classList.remove('flex');
+            }
+        }
+
+        function switchView(view) {
+            if (view === 'admin') {
+                if (!isAdminLoggedIn) {
+                    openAdminGateModal();
+                    return;
+                }
+                document.getElementById('storeView').classList.add('hidden');
+                document.getElementById('adminView').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                document.getElementById('storeView').classList.remove('hidden');
+                document.getElementById('adminView').classList.add('hidden');
+            }
+        }
+
+        function updateDashboardStats() {
+            const totalMoney = orders.reduce((sum, ord) => sum + ord.total, 0);
+            document.getElementById('statRevenue').innerText = totalMoney.toLocaleString() + ' ج.م';
+            document.getElementById('statOrdersCount').innerText = orders.length + ' طلب';
+            document.getElementById('statProductsCount').innerText = products.length + ' موديل';
+
+            // ملء جدول الطلبات
+            const ordersTbody = document.getElementById('ordersTableBody');
+            ordersTbody.innerHTML = orders.length === 0 ? `<tr><td colspan="7" class="text-center p-4 text-zinc-400">لا توجد مبيعات مسجلة حتى الآن.</td></tr>` : "";
+            orders.forEach(ord => {
+                ordersTbody.innerHTML += `
+                    <tr class="border-b border-zinc-100 hover:bg-zinc-50">
+                        <td class="p-3 font-mono font-bold">${ord.id}</td>
+                        <td class="p-3 font-bold">${ord.customer}</td>
+                        <td class="p-3 text-zinc-500">${ord.phone} - ${ord.address}</td>
+                        <td class="p-3 text-zinc-700 font-semibold">${ord.items}</td>
+                        <td class="p-3"><span class="bg-zinc-100 text-zinc-800 px-2 py-0.5 rounded font-bold text-[10px]">${ord.paymentMethod}</span></td>
+                        <td class="p-3 font-black text-emerald-600">${ord.total.toLocaleString()} ج.م</td>
+                        <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px]">${ord.status}</span></td>
+                    </tr>
+                `;
+            });
+
+            // ملء جدول الملابس
+            const prodTbody = document.getElementById('adminProductsTable');
+            prodTbody.innerHTML = "";
+            products.forEach(p => {
+                prodTbody.innerHTML += `
+                    <tr class="border-b border-zinc-100 hover:bg-zinc-50">
+                        <td class="p-3"><img src="${p.image}" class="w-10 h-12 object-cover rounded-lg border"></td>
+                        <td class="p-3 font-bold">${p.name}</td>
+                        <td class="p-3 text-zinc-500">${p.category}</td>
+                        <td class="p-3"><span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[10px] font-bold">${p.sizes.join(', ')}</span></td>
+                        <td class="p-3 font-black">${p.price.toLocaleString()} ج.م</td>
+                        <td class="p-3">
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-trash"></i> حذف</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // رفع صور الملابس عبر FileReader
+        function previewUploadedImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUploadedImageBase64 = e.target.result;
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = currentUploadedImageBase64;
+                    preview.classList.remove('hidden');
+                    document.getElementById('uploadPlaceholder').classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openAddProductModal() {
+            currentUploadedImageBase64 = "";
+            document.getElementById('addProductForm').reset();
+            document.getElementById('imagePreview').classList.add('hidden');
+            document.getElementById('uploadPlaceholder').classList.remove('hidden');
+            document.getElementById('addProductModal').classList.remove('hidden');
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.add('hidden');
+        }
+
+        function saveNewProduct(e) {
+            e.preventDefault();
+            const title = document.getElementById('prodTitle').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const category = document.getElementById('prodCategory').value;
+            
+            const sizeCheckboxes = document.querySelectorAll('input[name="sizes"]:checked');
+            const selectedSizes = Array.from(sizeCheckboxes).map(cb => cb.value);
+            if (selectedSizes.length === 0) selectedSizes.push("Free Size");
+
+            const defaultImg = "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80";
+
+            const newProduct = {
+                id: Date.now(),
+                name: title,
+                price: price,
+                category: category,
+                sizes: selectedSizes,
+                image: currentUploadedImageBase64 || defaultImg
+            };
+
+            products.unshift(newProduct);
+            localStorage.setItem('elwan_fashion_products', JSON.stringify(products));
+            
+            renderProducts(products);
+            updateDashboardStats();
+            closeAddProductModal();
+            alert("تم إدراج قطعة الملابس بنجاح في المتجر!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("هل تريد بالتأكيد حذف هذه القطعة من المتجر؟")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('elwan_fashion_products', JSON.stringify(products));
+                renderProducts(products);
+                updateDashboardStats();
+            }
+        }
+
+        // 5. حسابات العملاء والزبائن فقط
+        function handleUserBtnClick() {
+            if (currentCustomer) {
+                if (confirm(`أهلاً يا ${currentCustomer.name}، هل تود تسجيل الخروج من حسابك؟`)) {
+                    currentCustomer = null;
+                    localStorage.removeItem('elwan_current_customer');
+                    updateCustomerUI();
+                }
+            } else {
+                openCustomerModal();
+            }
+        }
+
+        function openCustomerModal() {
+            document.getElementById('customerModal').classList.remove('hidden');
+        }
+
+        function closeCustomerModal() {
+            document.getElementById('customerModal').classList.add('hidden');
+        }
+
+        function handleCustomerAuth(e) {
+            e.preventDefault();
+            const name = document.getElementById('custAuthName').value.trim();
+            co
