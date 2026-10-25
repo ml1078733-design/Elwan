@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر علوان | لوحة التحكم والمنتجات</title>
+    <title>متجر علوان | لوحة التحكم والدفع</title>
     <style>
         * {
             box-sizing: border-box;
@@ -15,7 +15,7 @@
         body {
             background-color: #f4f6f9;
             color: #333;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
@@ -23,21 +23,22 @@
             margin: 0 auto;
         }
 
-        h1, h2 {
+        h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #2c3e50;
+            font-size: 1.3rem;
         }
 
         .card {
             background: #ffffff;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        /* تنسيق شبكة المنتجات */
+        /* شبكة المنتجات */
         .products-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -50,19 +51,18 @@
             border-radius: 10px;
             padding: 15px;
             text-align: center;
-            position: relative;
         }
 
         .product-item img {
             width: 100%;
-            max-height: 180px;
+            max-height: 160px;
             object-fit: contain;
             border-radius: 8px;
             margin-bottom: 10px;
         }
 
         .product-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 5px;
         }
@@ -70,7 +70,8 @@
         .product-price {
             color: #e74c3c;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            margin-bottom: 10px;
         }
 
         .delete-btn {
@@ -80,30 +81,32 @@
             padding: 6px 12px;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 10px;
             font-size: 0.85rem;
         }
 
-        .delete-btn:hover {
-            background-color: #cc0000;
-        }
-
-        /* تنسيق نموذج لوحة الإدارة */
+        /* النماذج والإدخالات */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        .form-group input {
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
-            transition: border-color 0.3s;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             border-color: #27ae60;
         }
 
@@ -114,14 +117,38 @@
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
         .btn-submit:hover {
             background-color: #219150;
+        }
+
+        /* زر الدعم الفني المعلق */
+        .support-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #25d366;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+
+        .info-box {
+            background: #e8f8f5;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border: 1px solid #a3e4d7;
         }
     </style>
 </head>
@@ -129,50 +156,101 @@
 
     <div class="container">
 
-        <!-- قسم عرض منتجات المتجر -->
+        <!-- 1. قسم عرض المنتجات والشراء والدفع -->
         <div class="card">
             <h2>منتجات المتجر</h2>
-            <div id="productsGrid" class="products-grid">
-                <!-- المنتجات ستظهر هنا تلقائياً -->
-            </div>
+            <div id="productsGrid" class="products-grid"></div>
         </div>
 
-        <!-- قسم لوحة الإدارة (أدمن) -->
+        <!-- 2. قسم الدفع الإلكتروني عبر المحفظة -->
         <div class="card">
-            <h2>لوحة الإدارة - إضافة منتج جديد</h2>
+            <h2>إتمام الطلب والدفع بالمحفظة</h2>
+            <div class="info-box">
+                أحول المبلغ إلى محفظة المتجر رقم: <strong id="displayWallet">01000000000</strong> ثم أدخل بيانات التحويل أدناه:
+            </div>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>اختر محفظة الدفع:</label>
+                    <select id="walletType">
+                        <option value="vodafone">فودافون كاش</option>
+                        <option value="instapay">إنستابay (InstaPay)</option>
+                        <option value="etisalat">أورانج / اتصالات كاش</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>رقم هاتف المحفظة المحول منها:</label>
+                    <input type="text" id="senderPhone" placeholder="مثال: 011xxxxxxxx" required>
+                </div>
+                <button type="submit" class="btn-submit" style="background-color: #2980b9;">تأكيد عملية الدفع</button>
+            </form>
+        </div>
+
+        <!-- 3. لوحة إدارة الأدمن (إضافة المنتجات وتعديل بيانات التواصل) -->
+        <div class="card" style="border: 2px dashed #27ae60;">
+            <h2>لوحة الإدارة - التحكم بالمتجر</h2>
+            
+            <form id="settingsForm" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <h4 style="margin-bottom: 10px; color: #555;">إعدادات التواصل ورقم المحفظة</h4>
+                <div class="form-group">
+                    <input type="email" id="adminEmail" placeholder="البريد الإلكتروني للإدارة">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="adminWhatsapp" placeholder="رقم الواتساب (مثال: 2010xxxxxxxx)">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="adminWallet" placeholder="رقم محفظة استقبال الأموال">
+                </div>
+                <button type="submit" class="btn-submit" style="background-color: #e67e22; font-size: 0.9rem; padding: 8px;">حفظ إعدادات الأدمن</button>
+            </form>
+
+            <h4 style="margin-bottom: 10px; color: #555;">إضافة منتج جديد</h4>
             <form id="addProductForm">
                 <div class="form-group">
                     <input type="text" id="productName" placeholder="اسم المنتج" required>
                 </div>
                 <div class="form-group">
-                    <input type="number" id="productPrice" placeholder="السعر" required>
+                    <input type="number" id="productPrice" placeholder="السعر بالجنيه" required>
                 </div>
                 <div class="form-group">
                     <input type="url" id="productImage" placeholder="رابط صورة المنتج (URL)">
                 </div>
-                <button type="submit" class="btn-submit">إضافة المنتج</button>
+                <button type="submit" class="btn-submit">إضافة المنتج للمتجر</button>
             </form>
         </div>
 
     </div>
 
+    <!-- زر الدعم الفني العائم -->
+    <a id="supportBtn" href="https://wa.me/" target="_blank" class="support-float">💬 الدعم الفني</a>
+
     <script>
-        // المنتجات الافتراضية إذا كانت هذه أول مرة يتم فتح الصفحة فيها
-        const defaultProducts = [
+        // البيانات الافتراضية
+        let defaultProducts = [
             { id: 1, name: "تشيرت", price: 100, image: "https://via.placeholder.com/150" },
             { id: 2, name: "قميص", price: 200, image: "https://via.placeholder.com/150" }
         ];
 
-        // جلب المنتجات من LocalStorage أو استخدام الافتراضية
         let products = JSON.parse(localStorage.getItem('myProducts')) || defaultProducts;
+        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
+            email: "elwan@store.com",
+            whatsapp: "201000000000",
+            wallet: "01012345678"
+        };
 
         const productsGrid = document.getElementById('productsGrid');
         const addProductForm = document.getElementById('addProductForm');
+        const settingsForm = document.getElementById('settingsForm');
+        const checkoutForm = document.getElementById('checkoutForm');
+        
+        // تعبئة بيانات الأدمن الحالية
+        document.getElementById('adminEmail').value = adminSettings.email;
+        document.getElementById('adminWhatsapp').value = adminSettings.whatsapp;
+        document.getElementById('adminWallet').value = adminSettings.wallet;
+        document.getElementById('displayWallet').innerText = adminSettings.wallet;
+        document.getElementById('supportBtn').href = `https://wa.me/${adminSettings.whatsapp}`;
 
-        // دالة لعرض المنتجات في الصفحة
         function renderProducts() {
             productsGrid.innerHTML = '';
-
             if (products.length === 0) {
                 productsGrid.innerHTML = '<p style="text-align:center;">لا توجد منتجات حالياً</p>';
                 return;
@@ -181,55 +259,63 @@
             products.forEach((product, index) => {
                 const productDiv = document.createElement('div');
                 productDiv.className = 'product-item';
-                
-                // صورة افتراضية في حال عدم توفر صورة
-                const imgUrl = product.image || 'https://via.placeholder.com/150?text=لا+توجد+صورة';
+                const imgUrl = product.image || 'https://via.placeholder.com/150?text=صورة';
 
                 productDiv.innerHTML = `
-                    <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=خطأ+في+الصورة'">
+                    <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=خطأ'">
                     <div class="product-title">${product.name}</div>
                     <div class="product-price">${product.price} جنيه</div>
                     <button class="delete-btn" onclick="deleteProduct(${index})">حذف المنتج</button>
                 `;
-
                 productsGrid.appendChild(productDiv);
             });
-
-            // حفظ المنتجات في المتصفح
             localStorage.setItem('myProducts', JSON.stringify(products));
         }
 
-        // إضافة منتج جديد عند إرسال النموذج
+        // إضافة منتج جديد
         addProductForm.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const name = document.getElementById('productName').value;
             const price = document.getElementById('productPrice').value;
             const image = document.getElementById('productImage').value;
 
-            const newProduct = {
-                id: Date.now(),
-                name: name,
-                price: price,
-                image: image
-            };
-
-            products.push(newProduct);
+            products.push({ id: Date.now(), name, price, image });
             renderProducts();
-
-            // إعادة تصفير الإدخالات
             addProductForm.reset();
+            alert('تم إضافة المنتج بنجاح!');
         });
 
-        // دالة حذف منتج
+        // حفظ إعدادات الأدمن والواتساب والمحفظة
+        settingsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            adminSettings = {
+                email: document.getElementById('adminEmail').value,
+                whatsapp: document.getElementById('adminWhatsapp').value,
+                wallet: document.getElementById('adminWallet').value
+            };
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            document.getElementById('displayWallet').innerText = adminSettings.wallet;
+            document.getElementById('supportBtn').href = `https://wa.me/${adminSettings.whatsapp}`;
+            alert('تم تحديث إعدادات الأدمن بنجاح!');
+        });
+
+        // تأكيد الدفع
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const walletType = document.getElementById('walletType').value;
+            const senderPhone = document.getElementById('senderPhone').value;
+            alert(`تم تسجيل طلب الدفع عبر ${walletType} من الرقم: ${senderPhone}. سيتم مراجعة التحويل وتأكيد طلبك قريباً!`);
+            checkoutForm.reset();
+        });
+
+        // حذف منتج
         function deleteProduct(index) {
-            if (confirm('هل أنت تأكد من حذف هذا المنتج؟')) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
                 products.splice(index, 1);
                 renderProducts();
             }
         }
 
-        // تشغيل العرض الأول عند تحميل الصفحة
         renderProducts();
     </script>
 </body>
