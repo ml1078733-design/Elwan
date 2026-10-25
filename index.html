@@ -1,16 +1,25 @@
-<form id="loginForm">
-    <!-- حقل البريد -->
-    <div class="form-group">
-        <label>البريد الإلكتروني</label>
-        <input type="email" id="emailInput" placeholder="ادخل بريدك الإلكتروني" required>
-    </div>
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    <!-- حقل كلمة المرور -->
-    <div class="form-group">
-        <label>كلمة المرور</label>
-        <input type="password" id="passwordInput" placeholder="ادخل كلمة المرور" required>
-    </div>
+    const email = document.getElementById("emailInput").value.trim().toLowerCase();
+    const password = document.getElementById("passwordInput").value;
 
-    <!-- زر الدخول -->
-    <button type="submit">تسجيل الدخول</button>
-</form>
+    // بيانات الأدمن الخاصة بك فقط
+    const ADMIN_EMAIL = "admin@elwan.com";
+    const ADMIN_PASSWORD = "M2692002";
+
+    // إذا كانت البيانات مطابقة لبياناتك أنت -> يدخل كـ أدمن
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        localStorage.setItem("userRole", "admin");
+        localStorage.setItem("userEmail", email);
+        alert("مرحباً بك يا أدمن!");
+        window.location.href = "admin.html"; // صفحة لوحة التحكم الخاصة بك
+    } 
+    // أي شخص آخر يدخل كـ عميل
+    else {
+        localStorage.setItem("userRole", "customer");
+        localStorage.setItem("userEmail", email);
+        alert("تم تسجيل الدخول بنجاح!");
+        window.location.href = "index.html"; // الصفحة الرئيسية للمتجر
+    }
+});
