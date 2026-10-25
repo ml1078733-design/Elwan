@@ -4,83 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر علوان | Elwan Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-        }
-        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; }
-        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
-        
-        /* الهيدر العصري */
-        header { background: linear-gradient(135deg, #1a252f, #2c3e50); color: #fff; padding: 30px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        header h1 { font-size: 28px; font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
-        header p { font-size: 14px; color: #bdc3c7; }
-
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        
-        .section-title { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; width: 6px; height: 22px; background-color: var(--accent); border-radius: 3px; }
-
-        /* شبكة المنتجات */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .product-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid #eee; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .product-img-wrapper { width: 100%; height: 220px; overflow: hidden; background: #eee; }
-        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .product-card:hover .product-img { transform: scale(1.05); }
-        .product-info { padding: 20px; text-align: right; }
-        .product-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-        .product-price { font-size: 18px; font-weight: 900; color: var(--accent); }
-
-        /* لوحة الإدارة الحديثة */
-        .admin-panel { background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-top: 50px; }
-        .form-group { margin-bottom: 15px; }
-        .admin-panel input { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.3s; }
-        .admin-panel input:focus { border-color: var(--accent); }
-        .admin-panel button { background: var(--accent); color: #fff; border: none; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; width: 100%; transition: background 0.3s; box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3); }
-        .admin-panel button:hover { background: #d35400; }
-
-        .loading, .empty-msg { text-align: center; color: #7f8c8d; grid-column: 1 / -1; padding: 40px; font-size: 16px; }
+        * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
+        body { background-color: #f4f6f8; color: #333; margin: 0; padding: 0; }
+        header { background-color: #111; color: #fff; padding: 20px; text-align: center; }
+        header h1 { margin: 0; font-size: 24px; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .section-title { margin-bottom: 20px; font-size: 20px; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .product-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; padding: 15px; text-align: center; }
+        .product-img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
+        .product-title { font-size: 18px; margin: 10px 0 5px; font-weight: bold; }
+        .product-price { font-size: 16px; color: #e74c3c; margin-bottom: 15px; }
+        .admin-panel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 40px; }
+        .admin-panel input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .admin-panel button { background: #27ae60; color: #fff; border: none; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; }
+        .admin-panel button:hover { background: #219653; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>متجر علوان</h1>
-        <p>وجهتك الأولى للتسوق الراقي والأنيق</p>
+        <h1>متجر علوان | Elwan Store</h1>
     </header>
 
     <div class="container">
-        <h2 class="section-title">أحدث المنتجات</h2>
+        <h2 class="section-title">منتجات المتجر</h2>
         <div id="products-container" class="products-grid">
-            <div class="loading">جاري تحميل المنتجات...</div>
+            <!-- سيتم عرض المنتجات هنا ديناميكياً -->
         </div>
 
         <div class="admin-panel">
-            <h2 class="section-title">لوحة التحكم - إضافة منتج جديد</h2>
-            <div class="form-group">
-                <input type="text" id="product-name" placeholder="اسم المنتج">
-            </div>
-            <div class="form-group">
-                <input type="number" id="product-price" placeholder="سعر المنتج (جنيه)">
-            </div>
-            <div class="form-group">
-                <input type="text" id="product-img" placeholder="رابط صورة المنتج (URL)">
-            </div>
-            <button onclick="addProduct()">نشر المنتج في المتجر</button>
+            <h2 class="section-title">لوحة الإدارة - إضافة منتج جديد</h2>
+            <input type="text" id="product-name" placeholder="اسم المنتج">
+            <input type="number" id="product-price" placeholder="السعر">
+            <input type="text" id="product-img" placeholder="رابط صورة المنتج">
+            <button onclick="addProduct()">إضافة المنتج</button>
         </div>
     </div>
 
-    <!-- Firebase SDKs & Logic -->
+    <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // إعدادات فايربيس الخاصة بك
         const firebaseConfig = {
           apiKey: "AIzaSyCSewU1dCjcLObJq7vI3ZPaVRzN0Wp9b07",
           authDomain: "elwan-store-59b87.firebaseapp.com",
@@ -90,9 +58,11 @@
           appId: "1:951844473376:web:ccf3e4597a90f2063d4s45"
         };
 
+        // تهيئة فايربيس وقاعدة البيانات
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // دالة إضافة منتج
         window.addProduct = async function() {
             const name = document.getElementById('product-name').value;
             const price = document.getElementById('product-price').value;
@@ -107,9 +77,9 @@
                 await addDoc(collection(db, "products"), {
                     name: name,
                     price: Number(price),
-                    imageUrl: imageUrl || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500'
+                    imageUrl: imageUrl || 'https://via.placeholder.com/250'
                 });
-                alert('تم إضافة المنتج بنجاح وتحديث المتجر!');
+                alert('تم إضافة المنتج بنجاح!');
                 document.getElementById('product-name').value = '';
                 document.getElementById('product-price').value = '';
                 document.getElementById('product-img').value = '';
@@ -120,35 +90,34 @@
             }
         };
 
+        // دالة جلب وعرض المنتجات
         async function loadProducts() {
             const container = document.getElementById('products-container');
+            container.innerHTML = '<p>جاري تحميل المنتجات...</p>';
             try {
                 const querySnapshot = await getDocs(collection(db, "products"));
                 container.innerHTML = '';
                 if(querySnapshot.empty) {
-                    container.innerHTML = '<div class="empty-msg">لا توجد منتجات مضافة حالياً. ابدأ بإضافة أول منتج عبر لوحة التحكم بالأسفل!</div>';
+                    container.innerHTML = '<p>لا توجد منتجات مضافة حالياً.</p>';
                     return;
                 }
                 querySnapshot.forEach((doc) => {
                     const p = doc.data();
                     container.innerHTML += `
                         <div class="product-card">
-                            <div class="product-img-wrapper">
-                                <img src="${p.imageUrl}" alt="${p.name}" class="product-img">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-title">${p.name}</div>
-                                <div class="product-price">${p.price} جنيه</div>
-                            </div>
+                            <img src="${p.imageUrl}" alt="${p.name}" class="product-img">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-price">${p.price} جنيه</div>
                         </div>
                     `;
                 });
             } catch (error) {
                 console.error("خطأ في الجلب: ", error);
-                container.innerHTML = '<div class="empty-msg">فشل تحميل المنتجات. تأكد من الاتصال.</div>';
+                container.innerHTML = '<p>فشل تحميل المنتجات.</p>';
             }
         }
 
+        // تشغيل الدالة عند فتح الصفحة
         loadProducts();
     </script>
 </body>
