@@ -3,122 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر علوان | Elwan Store</title>
+    <title>متجر علوان | لوحة التحكم والمنتجات</title>
     <style>
-        * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
-        body { background-color: #f4f6f8; color: #333; margin: 0; padding: 0; }
-        header { background-color: #111; color: #fff; padding: 20px; text-align: center; }
-        header h1 { margin: 0; font-size: 24px; }
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-        .section-title { margin-bottom: 20px; font-size: 20px; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .product-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; padding: 15px; text-align: center; }
-        .product-img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
-        .product-title { font-size: 18px; margin: 10px 0 5px; font-weight: bold; }
-        .product-price { font-size: 16px; color: #e74c3c; margin-bottom: 15px; }
-        .admin-panel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 40px; }
-        .admin-panel input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        .admin-panel button { background: #27ae60; color: #fff; border: none; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; }
-        .admin-panel button:hover { background: #219653; }
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* تنسيق شبكة المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .product-item {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .product-item img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* تنسيق نموذج لوحة الإدارة */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #27ae60;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #219150;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>متجر علوان | Elwan Store</h1>
-    </header>
-
     <div class="container">
-        <h2 class="section-title">منتجات المتجر</h2>
-        <div id="products-container" class="products-grid">
-            <!-- سيتم عرض المنتجات هنا ديناميكياً -->
+
+        <!-- قسم عرض منتجات المتجر -->
+        <div class="card">
+            <h2>منتجات المتجر</h2>
+            <div id="productsGrid" class="products-grid">
+                <!-- المنتجات ستظهر هنا تلقائياً -->
+            </div>
         </div>
 
-        <div class="admin-panel">
-            <h2 class="section-title">لوحة الإدارة - إضافة منتج جديد</h2>
-            <input type="text" id="product-name" placeholder="اسم المنتج">
-            <input type="number" id="product-price" placeholder="السعر">
-            <input type="text" id="product-img" placeholder="رابط صورة المنتج">
-            <button onclick="addProduct()">إضافة المنتج</button>
+        <!-- قسم لوحة الإدارة (أدمن) -->
+        <div class="card">
+            <h2>لوحة الإدارة - إضافة منتج جديد</h2>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <input type="text" id="productName" placeholder="اسم المنتج" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="productPrice" placeholder="السعر" required>
+                </div>
+                <div class="form-group">
+                    <input type="url" id="productImage" placeholder="رابط صورة المنتج (URL)">
+                </div>
+                <button type="submit" class="btn-submit">إضافة المنتج</button>
+            </form>
         </div>
+
     </div>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <script>
+        // المنتجات الافتراضية إذا كانت هذه أول مرة يتم فتح الصفحة فيها
+        const defaultProducts = [
+            { id: 1, name: "تشيرت", price: 100, image: "https://via.placeholder.com/150" },
+            { id: 2, name: "قميص", price: 200, image: "https://via.placeholder.com/150" }
+        ];
 
-        // إعدادات فايربيس الخاصة بك
-        const firebaseConfig = {
-          apiKey: "AIzaSyCSewU1dCjcLObJq7vI3ZPaVRzN0Wp9b07",
-          authDomain: "elwan-store-59b87.firebaseapp.com",
-          projectId: "elwan-store-59b87",
-          storageBucket: "elwan-store-59b87.firebasestorage.app",
-          messagingSenderId: "951844473376",
-          appId: "1:951844473376:web:ccf3e4597a90f2063d4s45"
-        };
+        // جلب المنتجات من LocalStorage أو استخدام الافتراضية
+        let products = JSON.parse(localStorage.getItem('myProducts')) || defaultProducts;
 
-        // تهيئة فايربيس وقاعدة البيانات
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const productsGrid = document.getElementById('productsGrid');
+        const addProductForm = document.getElementById('addProductForm');
 
-        // دالة إضافة منتج
-        window.addProduct = async function() {
-            const name = document.getElementById('product-name').value;
-            const price = document.getElementById('product-price').value;
-            const imageUrl = document.getElementById('product-img').value;
+        // دالة لعرض المنتجات في الصفحة
+        function renderProducts() {
+            productsGrid.innerHTML = '';
 
-            if(!name || !price) {
-                alert('الرجاء إدخال اسم المنتج والسعر على الأقل!');
+            if (products.length === 0) {
+                productsGrid.innerHTML = '<p style="text-align:center;">لا توجد منتجات حالياً</p>';
                 return;
             }
 
-            try {
-                await addDoc(collection(db, "products"), {
-                    name: name,
-                    price: Number(price),
-                    imageUrl: imageUrl || 'https://via.placeholder.com/250'
-                });
-                alert('تم إضافة المنتج بنجاح!');
-                document.getElementById('product-name').value = '';
-                document.getElementById('product-price').value = '';
-                document.getElementById('product-img').value = '';
-                loadProducts();
-            } catch (error) {
-                console.error("خطأ أثناء الإضافة: ", error);
-                alert('حدث خطأ أثناء إضافة المنتج: ' + error.message);
-            }
-        };
+            products.forEach((product, index) => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product-item';
+                
+                // صورة افتراضية في حال عدم توفر صورة
+                const imgUrl = product.image || 'https://via.placeholder.com/150?text=لا+توجد+صورة';
 
-        // دالة جلب وعرض المنتجات
-        async function loadProducts() {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '<p>جاري تحميل المنتجات...</p>';
-            try {
-                const querySnapshot = await getDocs(collection(db, "products"));
-                container.innerHTML = '';
-                if(querySnapshot.empty) {
-                    container.innerHTML = '<p>لا توجد منتجات مضافة حالياً.</p>';
-                    return;
-                }
-                querySnapshot.forEach((doc) => {
-                    const p = doc.data();
-                    container.innerHTML += `
-                        <div class="product-card">
-                            <img src="${p.imageUrl}" alt="${p.name}" class="product-img">
-                            <div class="product-title">${p.name}</div>
-                            <div class="product-price">${p.price} جنيه</div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                console.error("خطأ في الجلب: ", error);
-                container.innerHTML = '<p>فشل تحميل المنتجات.</p>';
+                productDiv.innerHTML = `
+                    <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150?text=خطأ+في+الصورة'">
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-price">${product.price} جنيه</div>
+                    <button class="delete-btn" onclick="deleteProduct(${index})">حذف المنتج</button>
+                `;
+
+                productsGrid.appendChild(productDiv);
+            });
+
+            // حفظ المنتجات في المتصفح
+            localStorage.setItem('myProducts', JSON.stringify(products));
+        }
+
+        // إضافة منتج جديد عند إرسال النموذج
+        addProductForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const image = document.getElementById('productImage').value;
+
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                image: image
+            };
+
+            products.push(newProduct);
+            renderProducts();
+
+            // إعادة تصفير الإدخالات
+            addProductForm.reset();
+        });
+
+        // دالة حذف منتج
+        function deleteProduct(index) {
+            if (confirm('هل أنت تأكد من حذف هذا المنتج؟')) {
+                products.splice(index, 1);
+                renderProducts();
             }
         }
 
-        // تشغيل الدالة عند فتح الصفحة
-        loadProducts();
+        // تشغيل العرض الأول عند تحميل الصفحة
+        renderProducts();
     </script>
 </body>
 </html>
