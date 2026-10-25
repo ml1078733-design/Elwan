@@ -1,495 +1,187 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر ملابس عصري | Urban Style</title>
-    <!-- خط تجوال الأنيق -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #111111;
-            --accent: #25D366; /* لون الواتساب */
-            --bg-light: #f8f9fa;
-            --text-muted: #6c757d;
-            --border-color: #e9ecef;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر علوان | Elwan Store</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+    body { background-color: #f4f6f8; color: #333; padding-bottom: 60px; }
+    
+    /* Header */
+    header { background-color: #111; color: #fff; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    header h1 { font-size: 24px; font-weight: bold; }
+    
+    /* Container & Products */
+    .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+    .section-title { margin-bottom: 20px; font-size: 20px; color: #222; text-align: center; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    
+    .product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-card:hover { transform: translateY(-3px); }
+    .product-img { width: 100%; height: 200px; object-fit: cover; background-color: #eee; }
+    .product-info { padding: 15px; text-align: right; }
+    .product-title { font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #111; }
+    .product-price { font-size: 18px; color: #27ae60; font-weight: bold; margin-bottom: 12px; }
+    
+    .btn { display: block; width: 100%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; transition: 0.2s; }
+    .btn-add { background-color: #222; color: #fff; }
+    .btn-add:hover { background-color: #444; }
+    .btn-delete { background-color: #e74c3c; color: #fff; margin-top: 8px; }
+    
+    /* Shopping Cart Floating Bar */
+    .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px 20px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 99; }
+    .cart-total { font-weight: bold; font-size: 16px; }
+    .btn-whatsapp { background-color: #25d366; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
+    /* Admin Panel */
+    .admin-section { background: #fff; margin-top: 40px; padding: 20px; border-radius: 12px; border: 1px dashed #bbb; }
+    .admin-form { display: grid; gap: 12px; margin-top: 15px; }
+    .admin-form input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; width: 100%; font-size: 14px; }
+    .btn-save { background-color: #2980b9; color: #fff; }
 
-        body {
-            background-color: #ffffff;
-            color: #212529;
-            padding-bottom: 60px;
-        }
-
-        /* رأس الصفحة (Navbar) */
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: var(--primary);
-        }
-
-        .cart-icon-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            position: relative;
-            padding: 8px 14px;
-            border-radius: 8px;
-            background: var(--bg-light);
-            font-weight: bold;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            padding: 2px 7px;
-            font-size: 12px;
-        }
-
-        /* البنر الرئيسي */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200') center/cover;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 30px;
-        }
-
-        .hero h1 { font-size: 32px; margin-bottom: 10px; font-weight: 800; }
-        .hero p { font-size: 16px; opacity: 0.9; }
-
-        /* حاوية المنتجات */
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 0 15px;
-        }
-
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-        }
-
-        /* كارت المنتج */
-        .product-card {
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-        }
-
-        .product-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .product-info {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            font-size: 18px;
-            color: var(--primary);
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .size-selector {
-            margin-bottom: 15px;
-        }
-
-        .size-selector label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-        }
-
-        .size-selector select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .add-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            margin-top: auto;
-            transition: background 0.2s;
-        }
-
-        .add-btn:hover { background: #333; }
-
-        /* نافذة السلة (Modal) */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-
-        .cart-content {
-            background: white;
-            width: 100%;
-            max-width: 480px;
-            border-radius: 12px;
-            padding: 20px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .checkout-form {
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .whatsapp-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .whatsapp-btn:hover { background: #1eb954; }
-    </style>
+    .loading { text-align: center; font-size: 16px; color: #666; grid-column: 1 / -1; padding: 40px; }
+  </style>
 </head>
 <body>
 
-    <!-- الهيدر -->
-    <header>
-        <div class="logo">URBAN WEAR</div>
-        <button class="cart-icon-btn" onclick="openCart()">
-            🛒 السلة <span class="cart-badge" id="cart-count">0</span>
-        </button>
-    </header>
+  <header>
+    <h1>متجر علوان - Elwan Store</h1>
+  </header>
 
-    <!-- البنر -->
-    <div class="hero">
-        <h1>تشكيلة الموسم الجديد</h1>
-        <p>أفضل الخامات بأسعار تنافسية | الدفع عند الاستلام</p>
+  <div class="container">
+    <h2 class="section-title">المنتجات المتاحة</h2>
+    <div id="products-list" class="products-grid">
+      <div class="loading">جاري تحميل المنتجات من قاعدة البيانات...</div>
     </div>
 
-    <!-- شبكة المنتجات -->
-    <div class="container">
-        <h2 class="section-title">أحدث المنتجات</h2>
-        <div class="products-grid" id="products-container"></div>
+    <!-- لوحة التحكم للإدارة -->
+    <div class="admin-section">
+      <h3>⚙️ لوحة الإدارة (إضافة منتج جديد)</h3>
+      <form id="add-product-form" class="admin-form">
+        <input type="text" id="p-name" placeholder="اسم المنتج" required>
+        <input type="number" id="p-price" placeholder="السعر (جنيه / ريال)" required>
+        <input type="url" id="p-image" placeholder="رابط صورة المنتج (URL)" required>
+        <button type="submit" class="btn btn-save">إضافة المنتج للمتجر</button>
+      </form>
     </div>
+  </div>
 
-    <!-- نافذة السلة والدفع -->
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h3>سلة المشتريات</h3>
-                <button class="close-btn" onclick="closeCart()">&times;</button>
+  <!-- شريط السلة السفلي -->
+  <div class="cart-bar">
+    <div class="cart-total">الإجمالي: <span id="cart-price">0</span></div>
+    <button onclick="sendOrderWhatsApp()" class="btn-whatsapp">إرسال الطلب عبر WhatsApp 💬</button>
+  </div>
+
+  <!-- Firebase Scripts (Modular SDK) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3eQQl9dfZgnrQSGVSpT4N1W_D2k9efPk",
+      authDomain: "elwan-store-cad16.firebaseapp.com",
+      projectId: "elwan-store-cad16",
+      storageBucket: "elwan-store-cad16.firebasestorage.app",
+      messagingSenderId: "814172357771",
+      appId: "1:814172357771:web:cf83400199eee7f191408e",
+      measurementId: "G-8Q3N51P0HH"
+    };
+
+    // Initialize Firebase & Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const productsRef = collection(db, "products");
+
+    let cart = [];
+
+    // 1. جلب المنتجات تلقائياً وبشكل حي
+    onSnapshot(productsRef, (snapshot) => {
+      const container = document.getElementById("products-list");
+      container.innerHTML = "";
+
+      if(snapshot.empty) {
+        container.innerHTML = "<div class='loading'>لا توجد منتجات حالياً. يمكنك إضافة منتج من لوحة الإدارة في الأسفل.</div>";
+        return;
+      }
+
+      snapshot.forEach((docSnap) => {
+        const item = docSnap.data();
+        const id = docSnap.id;
+
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div>
+            <img src="${item.image}" class="product-img" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">
+            <div class="product-info">
+              <div class="product-title">${item.name}</div>
+              <div class="product-price">${item.price}</div>
             </div>
-            
-            <div id="cart-items">
-                <p style="text-align: center; color: var(--text-muted); padding: 20px;">السلة فارغة حالياً</p>
-            </div>
+          </div>
+          <div style="padding: 15px; pt-0;">
+            <button class="btn btn-add" onclick="addToCart('${item.name}', ${item.price})">إضافة للسلة 🛒</button>
+            <button class="btn btn-delete" onclick="deleteProduct('${id}')">حذف المنتج 🗑️</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    });
 
-            <div style="margin-top: 15px; font-weight: bold; font-size: 18px; display: flex; justify-content: space-between;">
-                <span>الإجمالي:</span>
-                <span id="total-price">0 ج.م</span>
-            </div>
+    // 2. إضافة منتج جديد
+    document.getElementById("add-product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("p-name").value;
+      const price = Number(document.getElementById("p-price").value);
+      const image = document.getElementById("p-image").value;
 
-            <!-- نموذج بيانات التوصيل -->
-            <div class="checkout-form">
-                <h4 style="margin-bottom: 10px;">بيانات استلام الطلب:</h4>
-                <div class="form-group">
-                    <label>الاسم بالكامل:</label>
-                    <input type="text" id="cust-name" placeholder="مثال: أحمد محمد">
-                </div>
-                <div class="form-group">
-                    <label>رقم الهاتف:</label>
-                    <input type="tel" id="cust-phone" placeholder="مثال: 01012345678">
-                </div>
-                <div class="form-group">
-                    <label>العنوان بالتفصيل:</label>
-                    <input type="text" id="cust-address" placeholder="المحافظة، المنطقة، اسم الشارع">
-                </div>
+      try {
+        await addDoc(productsRef, { name, price, image });
+        alert("تمت إضافة المنتج بنجاح!");
+        document.getElementById("add-product-form").reset();
+      } catch (err) {
+        alert("حدث خطأ أثناء الإضافة: " + err.message);
+      }
+    });
 
-                <button class="whatsapp-btn" onclick="sendOrderViaWhatsApp()">
-                    تأكيد الطلب عبر واتساب 💬
-                </button>
-            </div>
-        </div>
-    </div>
+    // 3. حذف منتج
+    window.deleteProduct = async (id) => {
+      if(confirm("هل أنت تأكد من رغبتك في حذف هذا المنتج؟")) {
+        await deleteDoc(doc(db, "products", id));
+      }
+    };
 
-    <script>
-        // ضع رقم هاتفك هنا مع كود الدولة (مثال لمصر: 201xxxxxxxxx)
-        const MY_WHATSAPP_NUMBER = "201270482605"; 
+    // 4. إدارة السلة
+    window.addToCart = (name, price) => {
+      cart.push({ name, price });
+      updateCartUI();
+    };
 
-        // قائمة المنتجات المعروضة
-        const products = [
-            {
-                id: 1,
-                name: "تيشيرت أوفر سايز بيسك أسود",
-                price: 320,
-                image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500",
-                sizes: ["M", "L", "XL", "XXL"]
-            },
-            {
-                id: 2,
-                name: "هودي ميلتون شتوي أبيض",
-                price: 550,
-                image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500",
-                sizes: ["L", "XL", "XXL"]
-            },
-            {
-                id: 3,
-                name: "بنطلون كارغو كاجوال زيتي",
-                price: 450,
-                image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500",
-                sizes: ["30", "32", "34", "36"]
-            },
-            {
-                id: 4,
-                name: "قميص كتان صيفي كاجوال",
-                price: 390,
-                image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500",
-                sizes: ["M", "L", "XL"]
-            }
-        ];
+    function updateCartUI() {
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById("cart-price").innerText = total;
+    }
 
-        let cart = [];
+    // 5. إرسال الطلب للواتساب
+    window.sendOrderWhatsApp = () => {
+      if (cart.length === 0) {
+        alert("السلة فارغة! قم بإضافة منتجات أولاً.");
+        return;
+      }
 
-        // عرض المنتجات في الصفحة
-        function renderProducts() {
-            const container = document.getElementById('products-container');
-            container.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <img src="${product.image}" class="product-img" alt="${product.name}">
-                    <div class="product-info">
-                        <div class="product-title">${product.name}</div>
-                        <div class="product-price">${product.price} ج.م</div>
-                        <div class="size-selector">
-                            <label>اختر المقاس:</label>
-                            <select id="size-${product.id}">
-                                ${product.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
-                            </select>
-                        </div>
-                        <button class="add-btn" onclick="addToCart(${product.id})">إضافة للسلة</button>
-                    </div>
-                </div>
-            `).join('');
-        }
+      let phoneNumber = "201000000000"; // 👈 استبدل هذا برقم الواتساب الخاص بك بالرمز الدولي
+      let text = "مرحباً، أود إرسال طلب جديد من المتجر:\n\n";
+      cart.forEach((item, index) => {
+        text += `${index + 1}. ${item.name} - ${item.price}\n`;
+      });
+      
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      text += `\n*الإجمالي: ${total}*`;
 
-        // إضافة منتج للسلة
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const size = document.getElementById(`size-${productId}`).value;
-            
-            cart.push({ ...product, selectedSize: size });
-            updateCartBadge();
-            alert(`تمت إضافة ${product.name} (مقاس: ${size}) للسلة!`);
-        }
-
-        // تحديث عدد العناصر في الأيقونة
-        function updateCartBadge() {
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
-        // فتح وإغلاق السلة
-        function openCart() {
-            renderCartItems();
-            document.getElementById('cart-modal').style.display = 'flex';
-        }
-
-        function closeCart() {
-            document.getElementById('cart-modal').style.display = 'none';
-        }
-
-        // عرض تفاصيل السلة
-        function renderCartItems() {
-            const cartContainer = document.getElementById('cart-items');
-            const totalContainer = document.getElementById('total-price');
-
-            if(cart.length === 0) {
-                cartContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">السلة فارغة حالياً</p>';
-                totalContainer.innerText = '0 ج.م';
-                return;
-            }
-
-            let total = 0;
-            cartContainer.innerHTML = cart.map((item, index) => {
-                total += item.price;
-                return `
-                    <div class="cart-item">
-                        <div>
-                            <div style="font-weight: bold;">${item.name}</div>
-                            <div style="font-size: 13px; color: var(--text-muted);">مقاس: ${item.selectedSize}</div>
-                            <div style="font-size: 14px;">${item.price} ج.م</div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">حذف</button>
-                    </div>
-                `;
-            }).join('');
-
-            totalContainer.innerText = total + " ج.م";
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartBadge();
-            renderCartItems();
-        }
-
-        // إرسال تفاصيل الطلب عبر واتساب
-        function sendOrderViaWhatsApp() {
-            if (cart.length === 0) {
-                alert("السلة فارغة، برجاء اختيار منتجات أولاً.");
-                return;
-            }
-
-            const name = document.getElementById('cust-name').value.trim();
-            const phone = document.getElementById('cust-phone').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            if (!name || !phone || !address) {
-                alert("برجاء استكمال بيانات التوصيل (الاسم، الهاتف، العنوان).");
-                return;
-            }
-
-            let total = 0;
-            let itemsText = cart.map(item => {
-                total += item.price;
-                return `• ${item.name} (مقاس: ${item.selectedSize}) - ${item.price} ج.م`;
-            }).join('\n');
-
-            // تجهيز نص رسالة الواتساب
-            const message = `السلام عليكم، أريد تأكيد طلب جديد:%0A%0A`
-                + `*تفاصيل المنتجات:*%0A${encodeURIComponent(itemsText)}%0A%0A`
-                + `*إجمالي الحساب:* ${total} ج.م%0A%0A`
-                + `*بيانات العميل:*%0A`
-                + `👤 الاسم: ${encodeURIComponent(name)}%0A`
-                + `📞 الهاتف: ${encodeURIComponent(phone)}%0A`
-                + `📍 العنوان: ${encodeURIComponent(address)}%0A`
-                + `الدفع عند الاستلام.`;
-
-            // توجيه المستخدم لواتساب
-            const url = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${message}`;
-            window.open(url, '_blank');
-        }
-
-        // تشغيل تحميل المنتجات أول مرة
-        renderProducts();
-    </script>
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    };
+  </script>
 </body>
 </html>
