@@ -3,99 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر علوان | Elwan Store</title>
-    <!-- Tailwind CSS CDN -->
+    <title>متجر علوان للملابس | Elwan Fashion Store</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Cairo -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-[#fcfbf9] text-zinc-900">
 
-    <!-- شريط التنبيهات العلوي -->
-    <div class="bg-slate-900 text-white text-xs py-2 px-4 flex justify-between items-center">
-        <span><i class="fa-solid fa-truck-fast ml-1"></i> توصيل سريع لجميع المحافظات</span>
-        <div class="space-x-4 space-x-reverse">
-            <span><i class="fa-solid fa-phone ml-1"></i> خدمة العملاء: 19616</span>
+    <!-- شريط الإعلانات العلوي -->
+    <div class="bg-black text-white text-xs py-2 px-4 flex justify-between items-center">
+        <span><i class="fa-solid fa-fire text-amber-400 ml-1"></i> خصم 20% على تشكيلة ملابس الموسم الجديد بكود: <b>ELWAN20</b></span>
+        <div class="hidden sm:flex items-center gap-4 text-[11px] text-zinc-300">
+            <span><i class="fa-solid fa-rotate-left ml-1"></i> استبدال وإرجاع مجاني خلال 14 يوم</span>
+            <span>|</span>
+            <span><i class="fa-solid fa-truck-fast ml-1"></i> توصيل سريع لجميع المحافظات</span>
         </div>
     </div>
 
     <!-- الناف بار (الهيدر) -->
-    <header class="bg-white shadow-sm sticky top-0 z-40">
+    <header class="bg-white/95 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
             <!-- الشعار -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('store')">
-                <div class="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center text-white font-black text-xl shadow">
+                <div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-black text-xl shadow">
                     E
                 </div>
                 <div>
-                    <span class="text-2xl font-black text-gray-900">عـلـوان</span>
-                    <span class="text-xs text-amber-600 font-bold block">ELWAN STORE</span>
+                    <span class="text-2xl font-black tracking-wider block leading-none">عـلـوان</span>
+                    <span class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Fashion & Wear</span>
                 </div>
             </div>
 
             <!-- محرك البحث -->
             <div class="hidden md:flex flex-1 max-w-md mx-8">
                 <div class="relative w-full">
-                    <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="ابحث عن منتج، سيراميك، خلاطات، أدوات صحية..." class="w-full bg-gray-100 border border-gray-200 rounded-full py-2 pr-10 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-gray-400"></i>
+                    <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="ابحث عن هودي، قميص، بنطلون، سنيكرز..." class="w-full bg-zinc-100 border-none rounded-full py-2 pr-10 pl-4 text-xs font-medium focus:ring-2 focus:ring-black outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-zinc-400 text-sm"></i>
                 </div>
             </div>
 
-            <!-- أزرار التحكم والروابط -->
-            <div class="flex items-center gap-3">
-                <!-- زر التبديل للوحة التحكم -->
-                <button onclick="toggleAdminPanel()" id="adminNavBtn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition">
-                    <i class="fa-solid fa-gauge"></i>
-                    <span class="hidden sm:inline">لوحة الإدارة</span>
+            <!-- أزرار الإدارة والسلة والحساب -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="toggleAdminPanel()" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span class="hidden sm:inline">لوحة الأدمن</span>
                 </button>
 
-                <!-- تسجيل الدخول / الملف الشخصي -->
-                <button onclick="openLoginModal()" id="userAuthBtn" class="bg-amber-50 text-amber-700 hover:bg-amber-100 px-3 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition">
+                <button onclick="openLoginModal()" id="userAuthBtn" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition">
                     <i class="fa-regular fa-user"></i>
                     <span id="authBtnText">دخول</span>
                 </button>
 
-                <!-- سلة المشتريات -->
-                <button onclick="toggleCartDrawer()" class="relative bg-amber-600 text-white hover:bg-amber-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cartCount" class="bg-white text-amber-700 rounded-full text-xs font-bold px-1.5">0</span>
+                <button onclick="toggleCartDrawer()" class="relative bg-black text-white hover:bg-zinc-800 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-sm transition">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cartCount" class="bg-amber-400 text-black rounded-full text-[11px] font-black px-1.5 min-w-[18px] text-center">0</span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- ============================================== -->
-    <!-- قسم واجهة المتجر الرئيسية (Store Front) -->
+    <!-- الواجهة الرئيسية للمتجر (Store Front) -->
     <!-- ============================================== -->
     <main id="storeView" class="container mx-auto px-4 py-6">
-        <!-- بنر ترويجي (Hero) -->
-        <section class="relative bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl overflow-hidden text-white p-8 md:p-12 mb-8 shadow-lg">
-            <div class="max-w-xl">
-                <span class="bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-full uppercase">عروض حصرية</span>
-                <h1 class="text-3xl md:text-5xl font-extrabold mt-4 mb-2 leading-tight">جدّد منزلك مع أحدث تصاميم علوان</h1>
-                <p class="text-gray-300 text-sm md:text-base mb-6">سيراميك، بورسلين، وأدوات صحية بأعلى جودة وضمان حقيقي.</p>
-                <a href="#productsSection" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-6 py-3 rounded-xl transition inline-block">تصفح المنتجات</a>
+        
+        <!-- بنر ترويجي كولكشن أزياء -->
+        <section class="relative bg-zinc-950 text-white rounded-3xl overflow-hidden p-8 md:p-12 mb-8 flex flex-col justify-center shadow-lg">
+            <div class="max-w-xl z-10">
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full">تشكيلة الموسم الجديد 2026</span>
+                <h1 class="text-3xl md:text-5xl font-black mt-4 mb-3 leading-tight">ملابس تعكس تميزك بأعلى خامات القطن</h1>
+                <p class="text-zinc-400 text-sm mb-6 font-medium">أحدث صيحات الهوديز، التيشرتات، البناطيل، والأحذية العصرية بتفصيل دقيق وجودة تدوم.</p>
+                <a href="#productsSection" class="bg-white text-black hover:bg-zinc-200 font-bold px-7 py-3 rounded-full text-sm transition inline-block">تصفح الكولكشن</a>
             </div>
         </section>
 
-        <!-- تصنيفات المنتجات -->
-        <div class="flex gap-2 overflow-x-auto pb-4 mb-6 text-sm font-medium" id="categoriesContainer">
-            <button onclick="filterCategory('all')" class="cat-btn active bg-amber-600 text-white px-4 py-2 rounded-full whitespace-nowrap">الكل</button>
-            <button onclick="filterCategory('سيراميك')" class="cat-btn bg-white border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-100 whitespace-nowrap">سيراميك وبورسلين</button>
-            <button onclick="filterCategory('خلاطات')" class="cat-btn bg-white border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-100 whitespace-nowrap">خلاطات وشاور</button>
-            <button onclick="filterCategory('صحي')" class="cat-btn bg-white border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-100 whitespace-nowrap">أدوات صحية</button>
+        <!-- تصنيفات أقسام الملابس -->
+        <div class="flex gap-2 overflow-x-auto pb-4 mb-8 text-xs font-bold" id="categoriesContainer">
+            <button onclick="filterCategory('all', this)" class="cat-btn active bg-black text-white px-5 py-2.5 rounded-full whitespace-nowrap shadow-sm">الكل</button>
+            <button onclick="filterCategory('رجالي', this)" class="cat-btn bg-white border border-zinc-200 text-zinc-700 px-5 py-2.5 rounded-full hover:bg-zinc-50 whitespace-nowrap">رجالي</button>
+            <button onclick="filterCategory('حريمي', this)" class="cat-btn bg-white border border-zinc-200 text-zinc-700 px-5 py-2.5 rounded-full hover:bg-zinc-50 whitespace-nowrap">حريمي</button>
+            <button onclick="filterCategory('هوديز وجواكت', this)" class="cat-btn bg-white border border-zinc-200 text-zinc-700 px-5 py-2.5 rounded-full hover:bg-zinc-50 whitespace-nowrap">هوديز وجواكت</button>
+            <button onclick="filterCategory('أحذية وسنيكرز', this)" class="cat-btn bg-white border border-zinc-200 text-zinc-700 px-5 py-2.5 rounded-full hover:bg-zinc-50 whitespace-nowrap">أحذية وسنيكرز</button>
         </div>
 
-        <!-- شبكة المنتجات -->
+        <!-- شبكة قطع الملابس -->
         <div id="productsSection">
-            <h2 class="text-xl font-bold mb-4 text-gray-800">أحدث المنتجات</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-black text-zinc-900 tracking-tight">أحدث القطع المعروضة</h2>
+                <span class="text-xs text-zinc-500 font-bold" id="itemsCountLabel"></span>
+            </div>
             <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- المنتجات يتم توليدها بواسطة JavaScript -->
+                <!-- المنتجات تولد هنا بواسطة JS -->
             </div>
         </div>
     </main>
@@ -104,48 +109,51 @@
     <!-- لوحة تحكم الأدمن (Admin Dashboard) -->
     <!-- ============================================== -->
     <section id="adminView" class="hidden container mx-auto px-4 py-8">
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">لوحة تحكم المتجر</h2>
-                <p class="text-gray-500 text-sm">متابعة الفلوس، المبيعات، وإضافة المنتجات</p>
+                <h2 class="text-2xl font-black text-zinc-900">لوحة تحكم متجر الملابس</h2>
+                <p class="text-zinc-500 text-xs">إدارة أرباح المبيعات (الفلوس)، فواتير الزبائن، وإضافة قطع ملابس جديدة مع رفع الصور</p>
             </div>
             <div class="flex gap-2">
-                <button onclick="openAddProductModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> إضافة منتج جديد
+                <button onclick="openAddProductModal()" class="bg-black hover:bg-zinc-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow">
+                    <i class="fa-solid fa-plus"></i> إضافة موديل جديد
                 </button>
-                <button onclick="switchView('store')" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm font-bold">
+                <button onclick="switchView('store')" class="bg-zinc-200 hover:bg-zinc-300 text-zinc-800 px-4 py-2.5 rounded-xl text-xs font-bold">
                     العودة للمتجر
                 </button>
             </div>
         </div>
 
-        <!-- بطاقات الإحصائيات المالية (الفلوس) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-emerald-500">
-                <span class="text-gray-400 text-xs font-bold block mb-1">إجمالي الفلوس (المبيعات)</span>
-                <span id="statRevenue" class="text-2xl font-extrabold text-emerald-600">0 ج.م</span>
+        <!-- الإحصائيات المالية (الفلوس والمبيعات) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+            <div class="bg-white p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="text-zinc-400 text-xs font-bold block mb-1">إجمالي الفلوس (المبيعات)</span>
+                <span id="statRevenue" class="text-2xl font-black text-emerald-600">0 ج.م</span>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-amber-500">
-                <span class="text-gray-400 text-xs font-bold block mb-1">إجمالي الطلبات</span>
-                <span id="statOrdersCount" class="text-2xl font-extrabold text-gray-800">0 طلب</span>
+            <div class="bg-white p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="text-zinc-400 text-xs font-bold block mb-1">عدد الطلبيات المستلمة</span>
+                <span id="statOrdersCount" class="text-2xl font-black text-zinc-900">0 طلب</span>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-sm border-r-4 border-blue-500">
-                <span class="text-gray-400 text-xs font-bold block mb-1">عدد المنتجات المسجلة</span>
-                <span id="statProductsCount" class="text-2xl font-extrabold text-gray-800">0 منتج</span>
+            <div class="bg-white p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="text-zinc-400 text-xs font-bold block mb-1">الموديلات المتوفرة في المخزن</span>
+                <span id="statProductsCount" class="text-2xl font-black text-zinc-900">0 موديل</span>
             </div>
         </div>
 
-        <!-- جدول متابعة الطلبات الواردة وطرق الدفع -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
-            <div class="p-4 border-b font-bold text-gray-800">الطلبات الحديثة وطرق الدفع</div>
+        <!-- سجل الطلبيات وطرق الدفع -->
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden mb-8 shadow-sm">
+            <div class="p-4 border-b border-zinc-100 font-bold text-sm text-zinc-800">
+                سجل المبيعات وطريقة دفع كل عميل
+            </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-right text-sm">
-                    <thead class="bg-gray-50 text-gray-500 text-xs">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-zinc-50 text-zinc-500 font-bold">
                         <tr>
                             <th class="p-3">رقم الطلب</th>
                             <th class="p-3">العميل</th>
+                            <th class="p-3">الهاتف والعنوان</th>
                             <th class="p-3">طريقة الدفع</th>
-                            <th class="p-3">المبلغ الإجمالي</th>
+                            <th class="p-3">المبلغ</th>
                             <th class="p-3">الحالة</th>
                         </tr>
                     </thead>
@@ -156,22 +164,23 @@
             </div>
         </div>
 
-        <!-- جدول إدارة المنتجات وحذفها -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="p-4 border-b font-bold text-gray-800">قائمة المنتجات المعروضة</div>
+        <!-- جدول إدارة الملابس وحذف الموديلات -->
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-sm">
+            <div class="p-4 border-b border-zinc-100 font-bold text-sm text-zinc-800">قائمة الملابس المعروضة بالموقع</div>
             <div class="overflow-x-auto">
-                <table class="w-full text-right text-sm">
-                    <thead class="bg-gray-50 text-gray-500 text-xs">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-zinc-50 text-zinc-500 font-bold">
                         <tr>
-                            <th class="p-3">الصورة</th>
+                            <th class="p-3">صورة الموديل</th>
                             <th class="p-3">الاسم</th>
                             <th class="p-3">القسم</th>
+                            <th class="p-3">المقاسات</th>
                             <th class="p-3">السعر</th>
-                            <th class="p-3">إجراءات</th>
+                            <th class="p-3">إجراء</th>
                         </tr>
                     </thead>
                     <tbody id="adminProductsTable">
-                        <!-- تضاف هنا المنتجات -->
+                        <!-- تضاف هنا الملابس -->
                     </tbody>
                 </table>
             </div>
@@ -179,27 +188,29 @@
     </section>
 
     <!-- ============================================== -->
-    <!-- قائمة السلة الجانبية (Cart Drawer) -->
+    <!-- سلة الشراء الجانبية للملابس (Cart Drawer) -->
     <!-- ============================================== -->
     <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-xs" onclick="toggleCartDrawer()"></div>
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity" onclick="toggleCartDrawer()"></div>
         <div class="absolute inset-y-0 left-0 max-w-full flex">
-            <div class="w-screen max-w-md bg-white shadow-xl flex flex-col">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
                 <div class="p-4 border-b flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-gray-800"><i class="fa-solid fa-basket-shopping ml-2"></i>سلة الشراء</h3>
-                    <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+                    <h3 class="font-bold text-base text-zinc-900"><i class="fa-solid fa-bag-shopping ml-2"></i>حقيبة التسوق</h3>
+                    <button onclick="toggleCartDrawer()" class="text-zinc-400 hover:text-black"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
-                <!-- قائمة عناصر السلة -->
-                <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-4">
-                    <!-- يتم عرض العناصر عبر JS -->
+                
+                <!-- عناصر السلة -->
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+                    <!-- يتم العرض عبر JS -->
                 </div>
-                <!-- تفاصيل الحساب والدفع -->
-                <div class="p-4 border-t bg-gray-50 space-y-3">
-                    <div class="flex justify-between font-bold text-base">
-                        <span>الإجمالي:</span>
-                        <span id="cartTotalPrice" class="text-amber-600">0 ج.م</span>
+
+                <!-- حساب الإجمالي وزر الدفع -->
+                <div class="p-4 border-t bg-zinc-50 space-y-3">
+                    <div class="flex justify-between font-bold text-sm">
+                        <span>إجمالي الفاتورة:</span>
+                        <span id="cartTotalPrice" class="text-zinc-950 font-black text-base">0 ج.م</span>
                     </div>
-                    <button onclick="openCheckoutModal()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition text-center shadow">
+                    <button onclick="openCheckoutModal()" class="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3.5 rounded-xl transition text-center text-xs tracking-wider shadow">
                         إتمام الطلب والدفع
                     </button>
                 </div>
@@ -208,82 +219,82 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- نافذة إتمام الدفع (Checkout & Payment Modal) -->
+    <!-- نافذة إتمام الطلب والدفع (Checkout & Payment) -->
     <!-- ============================================== -->
-    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeCheckoutModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 left-4 text-zinc-400 hover:text-black">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <h3 class="text-xl font-bold mb-4">الدفع وإتمام عملية الشراء</h3>
+            <h3 class="text-lg font-black mb-4">بيانات التوصيل والدفع</h3>
 
             <form id="checkoutForm" onsubmit="processPayment(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">الاسم بالكامل</label>
-                    <input type="text" id="custName" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">اسم المستلم بالكامل</label>
+                    <input type="text" id="custName" required placeholder="محمد أحمد علوان" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">رقم الهاتف / الواتساب</label>
-                    <input type="tel" id="custPhone" required placeholder="010XXXXXXXX" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">رقم الهاتف (للتواصل والشحن)</label>
+                    <input type="tel" id="custPhone" required placeholder="010XXXXXXXX" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">عنوان التوصيل بالتفصيل</label>
-                    <textarea id="custAddress" required rows="2" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">عنوان التوصيل بالتفصيل (المحافظة / المدينة / الشارع)</label>
+                    <textarea id="custAddress" required rows="2" placeholder="القاهرة، المعادي، شارع النصر..." class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black"></textarea>
                 </div>
 
-                <!-- اختيار طريقة الدفع -->
+                <!-- خيارات الدفع -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-2">اختر طريقة الدفع</label>
+                    <label class="block text-xs font-bold text-zinc-600 mb-2">طريقة الدفع</label>
                     <div class="grid grid-cols-3 gap-2">
-                        <label class="border p-3 rounded-lg text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center gap-1">
+                        <label class="border p-2.5 rounded-xl text-center cursor-pointer hover:bg-zinc-50 flex flex-col items-center gap-1 text-[11px] font-bold">
                             <input type="radio" name="paymentMethod" value="visa" checked onchange="togglePaymentInputs('visa')">
-                            <i class="fa-regular fa-credit-card text-amber-600 text-lg"></i>
-                            <span class="text-xs font-bold">فيزا / ماستركارد</span>
+                            <i class="fa-regular fa-credit-card text-zinc-800 text-base"></i>
+                            <span>فيزا / كارت</span>
                         </label>
-                        <label class="border p-3 rounded-lg text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center gap-1">
+                        <label class="border p-2.5 rounded-xl text-center cursor-pointer hover:bg-zinc-50 flex flex-col items-center gap-1 text-[11px] font-bold">
                             <input type="radio" name="paymentMethod" value="wallet" onchange="togglePaymentInputs('wallet')">
-                            <i class="fa-solid fa-mobile-screen-button text-amber-600 text-lg"></i>
-                            <span class="text-xs font-bold">محفظة إلكترونية</span>
+                            <i class="fa-solid fa-mobile-screen text-zinc-800 text-base"></i>
+                            <span>فودافون كاش</span>
                         </label>
-                        <label class="border p-3 rounded-lg text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center gap-1">
+                        <label class="border p-2.5 rounded-xl text-center cursor-pointer hover:bg-zinc-50 flex flex-col items-center gap-1 text-[11px] font-bold">
                             <input type="radio" name="paymentMethod" value="cod" onchange="togglePaymentInputs('cod')">
-                            <i class="fa-solid fa-hand-holding-dollar text-amber-600 text-lg"></i>
-                            <span class="text-xs font-bold">عند الاستلام</span>
+                            <i class="fa-solid fa-hand-holding-dollar text-zinc-800 text-base"></i>
+                            <span>عند الاستلام</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- حقول بطاقة الدفع (تظهر مع خيار الفيزا) -->
-                <div id="cardFields" class="space-y-2 bg-gray-50 p-3 rounded-xl border">
+                <!-- حقول بطاقة الدفع (فيزا) -->
+                <div id="cardFields" class="space-y-2 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
                     <div>
-                        <label class="text-[11px] font-bold text-gray-500">رقم البطاقة</label>
-                        <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" class="w-full border rounded p-2 text-xs bg-white">
+                        <label class="text-[10px] font-bold text-zinc-500">رقم البطاقة الائتمانية</label>
+                        <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" class="w-full border rounded-lg p-2 text-xs bg-white outline-none">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-[11px] font-bold text-gray-500">تاريخ الانتهاء</label>
-                            <input type="text" placeholder="MM/YY" maxlength="5" class="w-full border rounded p-2 text-xs bg-white">
+                            <label class="text-[10px] font-bold text-zinc-500">تاريخ الصلاحية</label>
+                            <input type="text" placeholder="MM/YY" maxlength="5" class="w-full border rounded-lg p-2 text-xs bg-white outline-none">
                         </div>
                         <div>
-                            <label class="text-[11px] font-bold text-gray-500">CVV</label>
-                            <input type="password" placeholder="123" maxlength="3" class="w-full border rounded p-2 text-xs bg-white">
+                            <label class="text-[10px] font-bold text-zinc-500">CVV</label>
+                            <input type="password" placeholder="123" maxlength="3" class="w-full border rounded-lg p-2 text-xs bg-white outline-none">
                         </div>
                     </div>
                 </div>
 
-                <!-- تعليمات المحفظة الإلكترونية -->
-                <div id="walletFields" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-800">
-                    <p class="font-bold mb-1">التحويل عبر فودافون كاش / إنستاباي:</p>
-                    <p>يرجى تحويل المبلغ الإجمالي إلى الرقم: <span class="font-bold underline">01019616000</span> ثم إتمام الطلب لتأكيد العملية تلقائياً.</p>
+                <!-- تعليمات المحافظ الإلكترونية -->
+                <div id="walletFields" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-900 leading-relaxed">
+                    <p class="font-bold mb-1">التحويل عبر فودافون كاش أو إنستاباي:</p>
+                    <p>يرجى إرسال المبلغ الإجمالي لرقم: <span class="font-black underline">01019616000</span> ثم الضغط على تأكيد الدفع لتوثيق الفاتورة فورياً.</p>
                 </div>
 
                 <div class="border-t pt-3">
-                    <div class="flex justify-between font-bold text-base mb-3">
-                        <span>المبلغ المستحق:</span>
-                        <span id="checkoutTotalAmount" class="text-amber-600">0 ج.م</span>
+                    <div class="flex justify-between font-bold text-sm mb-3">
+                        <span>المبلغ النهائي المطلوب:</span>
+                        <span id="checkoutTotalAmount" class="text-zinc-950 font-black text-base">0 ج.م</span>
                     </div>
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-sm">
-                        تأكيد ودفع الطلب الآن
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-xs shadow">
+                        تأكيد ودفع الطلبية
                     </button>
                 </div>
             </form>
@@ -291,103 +302,116 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- نافذة إضافة منتج جديد ورفع الصور (Admin Modal) -->
+    <!-- نافذة إضافة ملابس جديدة ورفع الصور (Admin Modal) -->
     <!-- ============================================== -->
-    <div id="addProductModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <button onclick="closeAddProductModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
+    <div id="addProductModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAddProductModal()" class="absolute top-4 left-4 text-zinc-400 hover:text-black">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <h3 class="text-lg font-bold mb-4">إضافة منتج جديد للمخزن</h3>
+            <h3 class="text-lg font-black mb-4">إضافة قطعة ملابس جديدة للمخزن</h3>
             
             <form id="addProductForm" onsubmit="saveNewProduct(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">اسم المنتج</label>
-                    <input type="text" id="prodTitle" required class="w-full border rounded-lg p-2 text-sm outline-none">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">اسم الموديل / القطعة</label>
+                    <input type="text" id="prodTitle" required placeholder="مثال: هودي قطن ثقيل أوفر سايز أسود" class="w-full border rounded-xl p-2.5 text-xs outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">السعر (ج.م)</label>
-                        <input type="number" id="prodPrice" required min="1" class="w-full border rounded-lg p-2 text-sm outline-none">
+                        <label class="block text-xs font-bold text-zinc-600 mb-1">السعر (ج.م)</label>
+                        <input type="number" id="prodPrice" required min="1" placeholder="650" class="w-full border rounded-xl p-2.5 text-xs outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">القسم</label>
-                        <select id="prodCategory" class="w-full border rounded-lg p-2 text-sm outline-none">
-                            <option value="سيراميك">سيراميك وبورسلين</option>
-                            <option value="خلاطات">خلاطات وشاور</option>
-                            <option value="صحي">أدوات صحية</option>
+                        <label class="block text-xs font-bold text-zinc-600 mb-1">القسم</label>
+                        <select id="prodCategory" class="w-full border rounded-xl p-2.5 text-xs outline-none bg-white">
+                            <option value="رجالي">رجالي</option>
+                            <option value="حريمي">حريمي</option>
+                            <option value="هوديز وجواكت">هوديز وجواكت</option>
+                            <option value="أحذية وسنيكرز">أحذية وسنيكرز</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- خاصية رفع الصور (Image Upload) -->
+                <!-- اختيار المقاسات المتاحة لهذا الموديل -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">صورة المنتج (رفع من الجهاز)</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center cursor-pointer hover:bg-gray-50 relative">
-                        <input type="file" id="prodImageInput" accept="image/*" onchange="previewUploadedImage(event)" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-                        <div id="uploadPlaceholder">
-                            <i class="fa-solid fa-cloud-arrow-up text-2xl text-amber-500 mb-1"></i>
-                            <span class="block text-xs text-gray-500">اضغط لرفع الصورة من هاتفك أو جهازك</span>
-                        </div>
-                        <img id="imagePreview" class="hidden w-24 h-24 object-cover rounded-lg mx-auto mt-2 border shadow-sm" alt="معاينة">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">المقاسات المتوفرة (اختر المتاح)</label>
+                    <div class="flex gap-2 text-xs font-bold">
+                        <label class="flex items-center gap-1 border px-2 py-1 rounded-lg cursor-pointer"><input type="checkbox" name="sizes" value="S" checked> S</label>
+                        <label class="flex items-center gap-1 border px-2 py-1 rounded-lg cursor-pointer"><input type="checkbox" name="sizes" value="M" checked> M</label>
+                        <label class="flex items-center gap-1 border px-2 py-1 rounded-lg cursor-pointer"><input type="checkbox" name="sizes" value="L" checked> L</label>
+                        <label class="flex items-center gap-1 border px-2 py-1 rounded-lg cursor-pointer"><input type="checkbox" name="sizes" value="XL" checked> XL</label>
+                        <label class="flex items-center gap-1 border px-2 py-1 rounded-lg cursor-pointer"><input type="checkbox" name="sizes" value="XXL"> XXL</label>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-lg text-sm mt-3">
-                    نشر المنتج في المتجر
+                <!-- ميزة رفع الصورة من الجهاز للملابس -->
+                <div>
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">صورة الموديل (رفع من هاتفك أو جهازك)</label>
+                    <div class="border-2 border-dashed border-zinc-300 rounded-2xl p-4 text-center cursor-pointer hover:bg-zinc-50 relative">
+                        <input type="file" id="prodImageInput" accept="image/*" onchange="previewUploadedImage(event)" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+                        <div id="uploadPlaceholder">
+                            <i class="fa-solid fa-shirt text-2xl text-zinc-400 mb-1"></i>
+                            <span class="block text-xs text-zinc-500 font-bold">انقر لاختيار صورة الملابس من جهازك</span>
+                        </div>
+                        <img id="imagePreview" class="hidden w-28 h-28 object-cover rounded-xl mx-auto mt-2 border shadow-sm" alt="معاينة الملابس">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs mt-3 shadow">
+                    حفظ وإدراج في المتجر
                 </button>
             </form>
         </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- نافذة تسجيل الدخول (Authentication Modal) -->
+    <!-- نافذة تسجيل الدخول للمتجر والأدمن (Login Modal) -->
     <!-- ============================================== -->
-    <div id="loginModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
-            <button onclick="closeLoginModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
+    <div id="loginModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
+            <button onclick="closeLoginModal()" class="absolute top-4 left-4 text-zinc-400 hover:text-black">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">تسجيل الدخول</h3>
-                <p class="text-xs text-gray-400 mt-1">سجل للدخول لمتجر علوان أو لوحة التحكم</p>
+            <div class="text-center mb-5">
+                <h3 class="text-xl font-black">تسجيل الدخول</h3>
+                <p class="text-xs text-zinc-400 mt-1">الدخول لحساب العميل أو الدخول لإدارة المتجر</p>
             </div>
             <form onsubmit="handleAuthLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">البريد الإلكتروني أو الهاتف</label>
-                    <input type="text" id="authEmail" required placeholder="admin@elwan.com" class="w-full border rounded-lg p-2.5 text-sm outline-none">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">البريد الإلكتروني</label>
+                    <input type="email" id="authEmail" required placeholder="admin@elwan.com" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">كلمة المرور</label>
-                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full border rounded-lg p-2.5 text-sm outline-none">
+                    <label class="block text-xs font-bold text-zinc-600 mb-1">كلمة المرور</label>
+                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-black">
                 </div>
-                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-lg text-sm transition">
-                    دخول
+                <button type="submit" class="w-full bg-black hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs transition">
+                    تسجيل الدخول
                 </button>
-                <div class="text-center mt-2">
-                    <span class="text-xs text-gray-400">للتجربة كمسؤول (الأدمن): البريد <b>admin@elwan.com</b></span>
+                <div class="text-center mt-3 bg-zinc-50 p-2 rounded-xl text-[11px] text-zinc-500">
+                    للدخول كمسؤول (أدمن): استخدم البريد <b class="text-black">admin@elwan.com</b>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- أكواد جافاسكريبت للتحكم والوظائف بالكامل -->
+    <!-- كود جافاسكريبت التشغيلي بالكامل -->
     <!-- ============================================== -->
     <script>
-        // المنتجات المبدئية في حالة أول تشغيل
-        const initialProducts = [
-            { id: 1, name: "خلاط حوض تركي أسود مط فاخر", price: 3200, category: "خلاطات", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&auto=format&fit=crop&q=80" },
-            { id: 2, name: "بورسلين كليوباترا رخامي 60×120 سم", price: 450, category: "سيراميك", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop&q=80" },
-            { id: 3, name: "طقم مرحاض معلق ألماني ديورافيت", price: 6800, category: "صحي", image: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=400&auto=format&fit=crop&q=80" },
-            { id: 4, name: "شاور بانل ديجيتال ستانلس ستيل", price: 5400, category: "خلاطات", image: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=400&auto=format&fit=crop&q=80" }
+        // تشكيلة مبدئية من الملابس والأزياء في حالة أول تشغيل
+        const initialClothes = [
+            { id: 1, name: "هودي أوفر سايز أسود قطن 100%", price: 590, category: "هوديز وجواكت", sizes: ["M", "L", "XL"], image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80" },
+            { id: 2, name: "قميص كاجوال بيج كلاسيكي بقصة مريحة", price: 480, category: "رجالي", sizes: ["S", "M", "L", "XL"], image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80" },
+            { id: 3, name: "كارديجان صوف ناعم كولكشن شتوي", price: 650, category: "حريمي", sizes: ["S", "M", "L"], image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&auto=format&fit=crop&q=80" },
+            { id: 4, name: "سنيكرز رياضي أبيض كلاسيك بريميوم", price: 850, category: "أحذية وسنيكرز", sizes: ["41", "42", "43", "44"], image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop&q=80" }
         ];
 
-        // تهيئة المتغيرات وقراءة البيانات من الذاكرة المحلية
-        let products = JSON.parse(localStorage.getItem('elwan_products')) || initialProducts;
-        let cart = JSON.parse(localStorage.getItem('elwan_cart')) || [];
-        let orders = JSON.parse(localStorage.getItem('elwan_orders')) || [];
-        let currentUser = JSON.parse(localStorage.getItem('elwan_user')) || null;
+        // تهيئة المتغيرات والذاكرة
+        let products = JSON.parse(localStorage.getItem('elwan_fashion_products')) || initialClothes;
+        let cart = JSON.parse(localStorage.getItem('elwan_fashion_cart')) || [];
+        let orders = JSON.parse(localStorage.getItem('elwan_fashion_orders')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('elwan_fashion_user')) || null;
         let currentUploadedImageBase64 = "";
 
         // بدء التشغيل
@@ -398,28 +422,47 @@
             updateAuthStatusUI();
         });
 
-        // 1. عرض المنتجات
+        // 1. عرض قطع الملابس مع خيارات المقاس
         function renderProducts(items) {
             const grid = document.getElementById('productsGrid');
+            document.getElementById('itemsCountLabel').innerText = `(${items.length} قطعة متوفرة)`;
             grid.innerHTML = "";
+
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">لا توجد منتجات متطابقة.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-400 font-bold">لا توجد قطع ملابس مطابقة للبحث.</div>`;
                 return;
             }
+
             items.forEach(p => {
+                const sizesHtml = p.sizes.map(s => `
+                    <button type="button" onclick="selectCardSize(${p.id}, '${s}', this)" class="size-btn-${p.id} px-2 py-0.5 border border-zinc-200 rounded text-[10px] font-bold hover:border-black transition">
+                        ${s}
+                    </button>
+                `).join('');
+
                 grid.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-100 flex flex-col justify-between">
-                        <div class="relative h-48 bg-gray-100 overflow-hidden">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 right-2 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${p.category}</span>
+                    <div class="bg-white rounded-2xl border border-zinc-100 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
+                        <div class="relative h-64 bg-zinc-100 overflow-hidden">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 right-3 bg-black/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-xs">${p.category}</span>
                         </div>
                         <div class="p-4 flex-1 flex flex-col justify-between">
                             <div>
-                                <h3 class="font-bold text-gray-800 text-sm mb-1">${p.name}</h3>
-                                <p class="text-amber-600 font-extrabold text-lg mb-3">${p.price.toLocaleString()} ج.م</p>
+                                <h3 class="font-bold text-zinc-900 text-xs sm:text-sm line-clamp-1 mb-1">${p.name}</h3>
+                                <p class="text-zinc-950 font-black text-base mb-3">${p.price.toLocaleString()} ج.م</p>
+                                
+                                <!-- اختيار المقاس -->
+                                <div class="mb-3">
+                                    <span class="text-[10px] font-bold text-zinc-400 block mb-1">المقاس:</span>
+                                    <div class="flex flex-wrap gap-1" id="sizesContainer_${p.id}">
+                                        ${sizesHtml}
+                                    </div>
+                                    <input type="hidden" id="selectedSize_${p.id}" value="${p.sizes[0] || 'One Size'}">
+                                </div>
                             </div>
-                            <button onclick="addToCart(${p.id})" class="w-full bg-gray-900 hover:bg-amber-600 text-white text-xs font-bold py-2.5 rounded-lg transition flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                            
+                            <button onclick="addToCartFromCard(${p.id})" class="w-full bg-black hover:bg-zinc-800 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> إضافة للحقيبة
                             </button>
                         </div>
                     </div>
@@ -427,72 +470,84 @@
             });
         }
 
-        // 2. إدارة السلة (Shopping Cart)
-        function addToCart(productId) {
+        // اختيار المقاس من الكارت
+        function selectCardSize(prodId, size, btn) {
+            document.querySelectorAll(`.size-btn-${prodId}`).forEach(b => {
+                b.classList.remove('bg-black', 'text-white', 'border-black');
+            });
+            btn.classList.add('bg-black', 'text-white', 'border-black');
+            document.getElementById(`selectedSize_${prodId}`).value = size;
+        }
+
+        function addToCartFromCard(productId) {
             const product = products.find(p => p.id === productId);
-            const existing = cart.find(item => item.id === productId);
+            const sizeInput = document.getElementById(`selectedSize_${productId}`);
+            const selectedSize = sizeInput ? sizeInput.value : (product.sizes[0] || 'M');
+
+            // دمج العنصر بناءً على المعرف والمقاس معاً
+            const existing = cart.find(item => item.id === productId && item.selectedSize === selectedSize);
             if (existing) {
                 existing.qty += 1;
             } else {
-                cart.push({ ...product, qty: 1 });
+                cart.push({ ...product, selectedSize: selectedSize, qty: 1 });
             }
+
             saveCart();
             updateCartUI();
             toggleCartDrawer(true);
         }
 
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
+        // 2. إدارة السلة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
             saveCart();
             updateCartUI();
         }
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) removeFromCart(id);
-                else {
-                    saveCart();
-                    updateCartUI();
-                }
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
             }
+            saveCart();
+            updateCartUI();
         }
 
         function saveCart() {
-            localStorage.setItem('elwan_cart', JSON.stringify(cart));
+            localStorage.setItem('elwan_fashion_cart', JSON.stringify(cart));
         }
 
         function updateCartUI() {
-            const totalItems = cart.reduce((acc, cur) => acc + cur.qty, 0);
+            const totalCount = cart.reduce((acc, cur) => acc + cur.qty, 0);
             const totalPrice = cart.reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
 
-            document.getElementById('cartCount').innerText = totalItems;
+            document.getElementById('cartCount').innerText = totalCount;
             document.getElementById('cartTotalPrice').innerText = totalPrice.toLocaleString() + ' ج.م';
             document.getElementById('checkoutTotalAmount').innerText = totalPrice.toLocaleString() + ' ج.م';
 
-            const cartContainer = document.getElementById('cartItemsList');
-            cartContainer.innerHTML = "";
+            const container = document.getElementById('cartItemsList');
+            container.innerHTML = "";
 
             if (cart.length === 0) {
-                cartContainer.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">سلتك فارغة حالياً</div>`;
+                container.innerHTML = `<div class="text-center py-12 text-zinc-400 text-xs font-bold">حقيبة التسوق فارغة حالياً</div>`;
                 return;
             }
 
-            cart.forEach(item => {
-                cartContainer.innerHTML += `
-                    <div class="flex items-center gap-3 border-b pb-3">
-                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-lg border">
+            cart.forEach((item, idx) => {
+                container.innerHTML += `
+                    <div class="flex items-center gap-3 border-b border-zinc-100 pb-3">
+                        <img src="${item.image}" class="w-16 h-20 object-cover rounded-xl border border-zinc-200">
                         <div class="flex-1">
-                            <h4 class="text-xs font-bold text-gray-800">${item.name}</h4>
-                            <p class="text-amber-600 font-bold text-xs mt-0.5">${item.price.toLocaleString()} ج.م</p>
+                            <h4 class="text-xs font-bold text-zinc-900">${item.name}</h4>
+                            <span class="inline-block bg-zinc-100 text-zinc-800 text-[10px] font-bold px-2 py-0.5 rounded mt-1">مقاس: ${item.selectedSize}</span>
+                            <p class="text-zinc-950 font-black text-xs mt-1">${item.price.toLocaleString()} ج.م</p>
                             <div class="flex items-center gap-2 mt-2">
-                                <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 bg-gray-200 rounded text-xs">-</button>
+                                <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 bg-zinc-200 rounded flex items-center justify-center text-xs font-bold">-</button>
                                 <span class="text-xs font-bold">${item.qty}</span>
-                                <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 bg-gray-200 rounded text-xs">+</button>
+                                <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 bg-zinc-200 rounded flex items-center justify-center text-xs font-bold">+</button>
                             </div>
                         </div>
-                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 p-1">
+                        <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700 p-2">
                             <i class="fa-solid fa-trash-can text-sm"></i>
                         </button>
                     </div>
@@ -506,10 +561,10 @@
             else drawer.classList.toggle('hidden');
         }
 
-        // 3. بوابات الدفع وإتمام الطلب (Checkout & Payment)
+        // 3. إتمام الدفع وتسجيل الفواتير
         function openCheckoutModal() {
             if (cart.length === 0) {
-                alert("السلة فارغة! أضف منتجات أولاً.");
+                alert("حقيبة التسوق فارغة! أضف ملابس أولاً.");
                 return;
             }
             toggleCartDrawer(false);
@@ -529,33 +584,33 @@
             e.preventDefault();
             const total = cart.reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
             const method = document.querySelector('input[name="paymentMethod"]:checked').value;
-            const methodLabel = method === 'visa' ? 'بطاقة ائتمان' : (method === 'wallet' ? 'فودافون كاش' : 'الدفع عند الاستلام');
+            const methodLabel = method === 'visa' ? 'فيزا / بطاقة' : (method === 'wallet' ? 'فودافون كاش' : 'الدفع عند الاستلام');
 
-            const newOrder = {
-                id: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
+            const order = {
+                id: 'ELW-' + Math.floor(100000 + Math.random() * 900000),
                 customer: document.getElementById('custName').value,
                 phone: document.getElementById('custPhone').value,
                 address: document.getElementById('custAddress').value,
+                items: cart.map(i => `${i.name} (مقاس: ${i.selectedSize} × ${i.qty})`).join('، '),
                 paymentMethod: methodLabel,
                 total: total,
-                status: 'ناجح ومدفوع',
+                status: 'مدفوع ومؤكد',
                 date: new Date().toLocaleDateString('ar-EG')
             };
 
-            orders.unshift(newOrder);
-            localStorage.setItem('elwan_orders', JSON.stringify(orders));
+            orders.unshift(order);
+            localStorage.setItem('elwan_fashion_orders', JSON.stringify(orders));
 
-            // تفريغ السلة
             cart = [];
             saveCart();
             updateCartUI();
             closeCheckoutModal();
 
-            alert(`✅ تم تأكيد طلبك ودفع المبلغ بنجاح!\nرقم الطلب: ${newOrder.id}\nطريقة الدفع: ${methodLabel}\nالقيمة: ${total.toLocaleString()} ج.م`);
+            alert(`✅ شكراً لتسوقك من علوان!\nتم تأكيد طلبك بنجاح.\nرقم الطلب: ${order.id}\nطريقة الدفع: ${methodLabel}\nالقيمة: ${total.toLocaleString()} ج.م`);
             updateDashboardStats();
         }
 
-        // 4. لوحة الإدارة ورفع الصور ومتابعة الأرباح (Admin)
+        // 4. لوحة الإدارة ورفع الصور ومتابعة الفلوس
         function toggleAdminPanel() {
             const store = document.getElementById('storeView');
             const admin = document.getElementById('adminView');
@@ -576,45 +631,47 @@
         }
 
         function updateDashboardStats() {
-            const totalRevenue = orders.reduce((sum, ord) => sum + ord.total, 0);
-            document.getElementById('statRevenue').innerText = totalRevenue.toLocaleString() + ' ج.م';
+            const totalMoney = orders.reduce((sum, ord) => sum + ord.total, 0);
+            document.getElementById('statRevenue').innerText = totalMoney.toLocaleString() + ' ج.م';
             document.getElementById('statOrdersCount').innerText = orders.length + ' طلب';
-            document.getElementById('statProductsCount').innerText = products.length + ' منتج';
+            document.getElementById('statProductsCount').innerText = products.length + ' موديل';
 
-            // ملء جدول الطلبات
+            // جدول مبيعات وفواتير العملاء
             const ordersTbody = document.getElementById('ordersTableBody');
-            ordersTbody.innerHTML = orders.length === 0 ? `<tr><td colspan="5" class="text-center p-4 text-gray-400">لا توجد طلبات بعد.</td></tr>` : "";
+            ordersTbody.innerHTML = orders.length === 0 ? `<tr><td colspan="6" class="text-center p-4 text-zinc-400">لا توجد مبيعات مسجلة حتى الآن.</td></tr>` : "";
             orders.forEach(ord => {
                 ordersTbody.innerHTML += `
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="p-3 font-mono font-bold text-xs">${ord.id}</td>
-                        <td class="p-3 font-semibold">${ord.customer}</td>
-                        <td class="p-3"><span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">${ord.paymentMethod}</span></td>
-                        <td class="p-3 font-bold text-emerald-600">${ord.total.toLocaleString()} ج.م</td>
-                        <td class="p-3"><span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-xs font-bold">${ord.status}</span></td>
+                    <tr class="border-b border-zinc-100 hover:bg-zinc-50">
+                        <td class="p-3 font-mono font-bold">${ord.id}</td>
+                        <td class="p-3 font-bold">${ord.customer}</td>
+                        <td class="p-3 text-zinc-500">${ord.phone} - ${ord.address}</td>
+                        <td class="p-3"><span class="bg-zinc-100 text-zinc-800 px-2 py-0.5 rounded font-bold text-[10px]">${ord.paymentMethod}</span></td>
+                        <td class="p-3 font-black text-emerald-600">${ord.total.toLocaleString()} ج.م</td>
+                        <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px]">${ord.status}</span></td>
                     </tr>
                 `;
             });
 
-            // ملء جدول المنتجات
+            // جدول المنتجات المخزنة
             const prodTbody = document.getElementById('adminProductsTable');
             prodTbody.innerHTML = "";
             products.forEach(p => {
                 prodTbody.innerHTML += `
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="p-3"><img src="${p.image}" class="w-10 h-10 object-cover rounded-md"></td>
-                        <td class="p-3 font-bold text-xs">${p.name}</td>
-                        <td class="p-3 text-xs text-gray-500">${p.category}</td>
-                        <td class="p-3 font-bold text-xs">${p.price.toLocaleString()} ج.م</td>
+                    <tr class="border-b border-zinc-100 hover:bg-zinc-50">
+                        <td class="p-3"><img src="${p.image}" class="w-10 h-12 object-cover rounded-lg border"></td>
+                        <td class="p-3 font-bold">${p.name}</td>
+                        <td class="p-3 text-zinc-500">${p.category}</td>
+                        <td class="p-3"><span class="bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded text-[10px] font-bold">${p.sizes.join(', ')}</span></td>
+                        <td class="p-3 font-black">${p.price.toLocaleString()} ج.م</td>
                         <td class="p-3">
-                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-bold"><i class="fa-solid fa-trash"></i> حذف</button>
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-trash"></i> حذف</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // رفع الصور عبر FileReader
+        // رفع صور الملابس من الهاتف/الكمبيوتر
         function previewUploadedImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -647,39 +704,47 @@
             const title = document.getElementById('prodTitle').value;
             const price = parseFloat(document.getElementById('prodPrice').value);
             const category = document.getElementById('prodCategory').value;
-            const image = currentUploadedImageBase64 || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&auto=format&fit=crop&q=80";
+            
+            // المقاسات المختارة
+            const sizeCheckboxes = document.querySelectorAll('input[name="sizes"]:checked');
+            const selectedSizes = Array.from(sizeCheckboxes).map(cb => cb.value);
+            if (selectedSizes.length === 0) selectedSizes.push("Free Size");
 
-            const newProd = {
+            const defaultImg = "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80";
+
+            const newProduct = {
                 id: Date.now(),
                 name: title,
                 price: price,
                 category: category,
-                image: image
+                sizes: selectedSizes,
+                image: currentUploadedImageBase64 || defaultImg
             };
 
-            products.unshift(newProd);
-            localStorage.setItem('elwan_products', JSON.stringify(products));
+            products.unshift(newProduct);
+            localStorage.setItem('elwan_fashion_products', JSON.stringify(products));
+            
             renderProducts(products);
             updateDashboardStats();
             closeAddProductModal();
-            alert("تم إضافة المنتج بنجاح!");
+            alert("تم إدراج قطعة الملابس بنجاح في المتجر!");
         }
 
         function deleteProduct(id) {
-            if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+            if (confirm("هل تريد بالتأكيد حذف هذه القطعة من المتجر؟")) {
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('elwan_products', JSON.stringify(products));
+                localStorage.setItem('elwan_fashion_products', JSON.stringify(products));
                 renderProducts(products);
                 updateDashboardStats();
             }
         }
 
-        // 5. تسجيل الدخول والمصادقة (Auth)
+        // 5. تسجيل الدخول والمصادقة
         function openLoginModal() {
             if (currentUser) {
                 if (confirm(`مرحباً ${currentUser.name}، هل تريد تسجيل الخروج؟`)) {
                     currentUser = null;
-                    localStorage.removeItem('elwan_user');
+                    localStorage.removeItem('elwan_fashion_user');
                     updateAuthStatusUI();
                 }
             } else {
@@ -699,10 +764,10 @@
                 email: email,
                 role: email.includes('admin') ? 'admin' : 'customer'
             };
-            localStorage.setItem('elwan_user', JSON.stringify(currentUser));
+            localStorage.setItem('elwan_fashion_user', JSON.stringify(currentUser));
             updateAuthStatusUI();
             closeLoginModal();
-            alert(`أهلاً بك، تم تسجيل الدخول بنجاح كـ (${currentUser.role === 'admin' ? 'مدير' : 'عميل'})`);
+            alert(`أهلاً بك يا ${currentUser.name}! تم الدخول بصلاحية: (${currentUser.role === 'admin' ? 'مدير المتجر' : 'عميل'})`);
         }
 
         function updateAuthStatusUI() {
@@ -713,10 +778,15 @@
             }
         }
 
-        // 6. التصفية والبحث
-        function filterCategory(cat) {
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('bg-amber-600', 'text-white'));
-            event.target.classList.add('bg-amber-600', 'text-white');
+        // 6. الفرز والبحث
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-black', 'text-white');
+                b.classList.add('bg-white', 'text-zinc-700');
+            });
+            btn.classList.add('bg-black', 'text-white');
+            btn.classList.remove('bg-white', 'text-zinc-700');
+
             if (cat === 'all') renderProducts(products);
             else renderProducts(products.filter(p => p.category === cat));
         }
