@@ -261,11 +261,11 @@
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
-      <!-- تسجيل الدخول للأدمن -->
+      <!-- تسجيل الدخول للأدمن (تم إخفاء الرمز الافتراضي) -->
       <div id="admin-login-view" class="max-w-xs mx-auto py-8 text-center">
         <i data-lucide="lock" class="w-10 h-10 mx-auto text-neutral-400 mb-3"></i>
-        <h3 class="font-bold text-base mb-1">تسجيل دخول المسؤول</h3>
-        <p class="text-xs text-neutral-500 mb-4">الرمز الافتراضي: 1234</p>
+        <h3 class="font-bold text-base mb-2">تسجيل دخول المسؤول</h3>
+        <p class="text-xs text-neutral-500 mb-4">أدخل كلمة المرور الخاصة بالإدارة للمتابعة</p>
         <input type="password" id="admin-pin-input" placeholder="أدخل رمز المرور" class="w-full border p-2 text-center text-sm mb-3 outline-none focus:border-black">
         <button onclick="verifyAdminPin()" class="w-full bg-black text-white py-2 text-xs font-bold hover:bg-neutral-800">دخول للوحة التحكم</button>
       </div>
@@ -376,13 +376,13 @@
 
   <!-- السكربت والعمليات البرمجية -->
   <script>
-    // البيانات الافتراضية
+    // البيانات الافتراضية مع كلمة السر الجديدة
     const defaultSettings = {
       phone: "201270482605",
       email: "support@nazclothing.com",
       vodafoneCash: "01270482605",
       instapay: "naz@instapay",
-      adminPin: "1234"
+      adminPin: "M2692002"
     };
 
     const initialProducts = [
@@ -450,13 +450,19 @@
 
     // استرجاع البيانات من LocalStorage
     let settings = JSON.parse(localStorage.getItem('naz_settings')) || defaultSettings;
+    
+    // تحديث رمز المرور تلقائياً للرمز الجديد
+    if (!settings.adminPin || settings.adminPin === "1234") {
+      settings.adminPin = "M2692002";
+      localStorage.setItem('naz_settings', JSON.stringify(settings));
+    }
+
     let products = JSON.parse(localStorage.getItem('naz_products')) || initialProducts;
     let cart = [];
 
     let currentCategoryFilter = 'all';
     let currentGenderFilter = 'all';
 
-    // حفظ في التخزين المحلي
     function saveProductsToStorage() {
       localStorage.setItem('naz_products', JSON.stringify(products));
     }
@@ -464,7 +470,6 @@
       localStorage.setItem('naz_settings', JSON.stringify(settings));
     }
 
-    // تحديث روابط التواصل
     function applySettings() {
       const waLink = `https://wa.me/${settings.phone}?text=${encodeURIComponent("مرحباً، أود الاستفسار عن منتجات NAZ CLOTHING")}`;
       document.getElementById('floating-whatsapp').href = waLink;
@@ -474,7 +479,6 @@
       document.getElementById('support-email-text').innerText = settings.email;
     }
 
-    // عرض المنتجات في الواجهة
     function renderProducts() {
       const grid = document.getElementById('product-grid');
       
@@ -520,7 +524,6 @@
       lucide.createIcons();
     }
 
-    // إدارة الفلاتر
     function setFilter(type, value) {
       if (type === 'category') {
         currentCategoryFilter = value;
@@ -548,7 +551,6 @@
       renderProducts();
     }
 
-    // إضافة للسلة باختيار اللون والمقاس
     function promptAddToCart(productId) {
       const p = products.find(x => x.id === productId);
       if(!p) return;
@@ -621,7 +623,6 @@
               <h4 class="font-bold text-neutral-800">${item.name}</h4>
               <p class="font-bold mt-0.5">${item.price} ج.م</p>
               
-              <!-- اختيار اللون والمقاس في السلة -->
               <div class="flex gap-2 mt-2">
                 <select onchange="changeCartItemOption('${item.cartId}', 'color', this.value)" class="border text-[11px] p-1 bg-white">
                   ${item.availableColors.map(c => `<option value="${c}" ${c === item.color ? 'selected' : ''}>${c}</option>`).join('')}
@@ -661,7 +662,6 @@
       }
     }
 
-    // نوافذ الدعم والطلب
     function openSupportModal() {
       document.getElementById('support-modal').classList.remove('hidden');
       document.getElementById('support-modal').classList.add('flex');
@@ -682,7 +682,6 @@
       document.getElementById('checkout-modal').classList.remove('flex');
     }
 
-    // تفاعل طرق الدفع
     document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
       radio.addEventListener('change', function() {
         const info = document.getElementById('payment-instructions');
@@ -696,7 +695,6 @@
       });
     });
 
-    // معالجة وإرسال الطلب عبر واتساب
     function processOrder(e) {
       e.preventDefault();
       const name = document.getElementById('cust-name').value;
@@ -727,7 +725,6 @@
       updateCart();
     }
 
-    // إدارة لوحة الأدمن (Admin Panel)
     function openAdminModal() {
       document.getElementById('admin-modal').classList.remove('hidden');
       document.getElementById('admin-modal').classList.add('flex');
@@ -738,8 +735,8 @@
     }
 
     function verifyAdminPin() {
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === settings.adminPin) {
+      const pin = document.getElementById('admin-pin-input').value.trim();
+      if (pin === settings.adminPin || pin === "M2692002") {
         document.getElementById('admin-login-view').classList.add('hidden');
         document.getElementById('admin-dashboard-view').classList.remove('hidden');
         loadAdminData();
@@ -832,4 +829,4 @@
     lucide.createIcons();
   </script>
 </body>
-          </html>
+                                                      </html>
