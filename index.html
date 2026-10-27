@@ -384,38 +384,8 @@
       adminPin: "M2692002"
     };
 
-    // مصفوفة المنتجات الأساسية مع الروابط الجديدة كاملة
+    // مصفوفة المنتجات الأساسية بعد إزالة أول 3 منتجات غير صالحة
     const initialProducts = [
-      {
-        id: 1,
-        name: "بنطلون جينز وايد ليج أوفر سايز",
-        category: "pants",
-        gender: "unisex",
-        price: 790,
-        colors: ["أزرق ثلجي", "كحلي", "أسود"],
-        sizes: ["S", "M", "L", "XL"],
-        image: "https://ibb.co/99f8j8NZ"
-      },
-      {
-        id: 2,
-        name: "تيشيرت بيسك أوفر سايز هيفي ويت",
-        category: "tshirt",
-        gender: "unisex",
-        price: 450,
-        colors: ["أبيض", "أسود", "رمادي ميلانج"],
-        sizes: ["M", "L", "XL", "XXL"],
-        image: "https://ibb.co/Y4jDXRGq"
-      },
-      {
-        id: 3,
-        name: "قميص أوفر سايز كاجوال قطن صافي",
-        category: "shirt",
-        gender: "unisex",
-        price: 650,
-        colors: ["أبيض ناصع", "سيمون هادئ", "كحلي مخطط"],
-        sizes: ["S", "M", "L", "XL"],
-        image: "https://ibb.co/67rzJZHC"
-      },
       {
         id: 4,
         name: "بنطلون جينز ستريت حريمي عالي الخصر",
@@ -468,33 +438,9 @@
 
     let products = JSON.parse(localStorage.getItem('naz_products')) || initialProducts;
 
-    // مزامنة وتحديث الروابط والصور فورياً في ذاكرة المتصفح
-    let updatedStorage = false;
-    if (products[0] && products[0].image.includes('unsplash')) {
-      products[0].image = "https://ibb.co/99f8j8NZ";
-      products[1].image = "https://ibb.co/Y4jDXRGq";
-      products[2].image = "https://ibb.co/67rzJZHC";
-      updatedStorage = true;
-    }
-    if (products[3] && products[3].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0010.jpg") {
-      products[3].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0010.jpg";
-      updatedStorage = true;
-    }
-    if (products[4] && products[4].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0011.jpg") {
-      products[4].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0011.jpg";
-      updatedStorage = true;
-    }
-    if (products[5] && products[5].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0013(1).jpg") {
-      products[5].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0013(1).jpg";
-      updatedStorage = true;
-    }
-    if (!products.some(p => p.id === 7)) {
-      products.push(initialProducts[6]);
-      updatedStorage = true;
-    }
-    if (updatedStorage) {
-      localStorage.setItem('naz_products', JSON.stringify(products));
-    }
+    // حذف المنتجات الثلاثة القديمة فوراً من ذاكرة المتصفح
+    products = products.filter(p => p.id !== 1 && p.id !== 2 && p.id !== 3);
+    localStorage.setItem('naz_products', JSON.stringify(products));
 
     let cart = [];
 
@@ -867,5 +813,4 @@
     lucide.createIcons();
   </script>
 </body>
-  </html>
-  
+    </html>
