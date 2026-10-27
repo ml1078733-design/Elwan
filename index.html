@@ -261,7 +261,7 @@
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
-      <!-- تسجيل الدخول للأدمن (تم إخفاء الرمز الافتراضي) -->
+      <!-- تسجيل الدخول للأدمن -->
       <div id="admin-login-view" class="max-w-xs mx-auto py-8 text-center">
         <i data-lucide="lock" class="w-10 h-10 mx-auto text-neutral-400 mb-3"></i>
         <h3 class="font-bold text-base mb-2">تسجيل دخول المسؤول</h3>
@@ -376,7 +376,6 @@
 
   <!-- السكربت والعمليات البرمجية -->
   <script>
-    // البيانات الافتراضية مع كلمة السر الجديدة
     const defaultSettings = {
       phone: "201270482605",
       email: "support@nazclothing.com",
@@ -385,6 +384,7 @@
       adminPin: "M2692002"
     };
 
+    // مصفوفة المنتجات مع الصور الجديدة
     const initialProducts = [
       {
         id: 1,
@@ -394,7 +394,7 @@
         price: 790,
         colors: ["أزرق ثلجي", "كحلي", "أسود"],
         sizes: ["S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800"
+        image: "https://ibb.co/99f8j8NZ"
       },
       {
         id: 2,
@@ -404,7 +404,7 @@
         price: 450,
         colors: ["أبيض", "أسود", "رمادي ميلانج"],
         sizes: ["M", "L", "XL", "XXL"],
-        image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800"
+        image: "https://ibb.co/Y4jDXRGq"
       },
       {
         id: 3,
@@ -414,7 +414,7 @@
         price: 650,
         colors: ["أبيض ناصع", "سيمون هادئ", "كحلي مخطط"],
         sizes: ["S", "M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80&w=800"
+        image: "https://ibb.co/67rzJZHC"
       },
       {
         id: 4,
@@ -451,13 +451,21 @@
     // استرجاع البيانات من LocalStorage
     let settings = JSON.parse(localStorage.getItem('naz_settings')) || defaultSettings;
     
-    // تحديث رمز المرور تلقائياً للرمز الجديد
     if (!settings.adminPin || settings.adminPin === "1234") {
       settings.adminPin = "M2692002";
       localStorage.setItem('naz_settings', JSON.stringify(settings));
     }
 
     let products = JSON.parse(localStorage.getItem('naz_products')) || initialProducts;
+
+    // مزامنة الصور المحدثة تلقائياً في حالة كانت محفوظة بروابط قديمة في المتصفح
+    if (products.length >= 3 && products[0].image.includes('unsplash')) {
+      products[0].image = "https://ibb.co/99f8j8NZ";
+      products[1].image = "https://ibb.co/Y4jDXRGq";
+      products[2].image = "https://ibb.co/67rzJZHC";
+      localStorage.setItem('naz_products', JSON.stringify(products));
+    }
+
     let cart = [];
 
     let currentCategoryFilter = 'all';
@@ -829,4 +837,4 @@
     lucide.createIcons();
   </script>
 </body>
-                                                      </html>
+          </html>
