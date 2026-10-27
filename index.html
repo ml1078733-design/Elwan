@@ -384,7 +384,7 @@
       adminPin: "M2692002"
     };
 
-    // مصفوفة المنتجات مع الصور الجديدة
+    // مصفوفة المنتجات الأساسية مع الروابط الجديدة كاملة
     const initialProducts = [
       {
         id: 1,
@@ -424,7 +424,7 @@
         price: 750,
         colors: ["أزرق فاتح", "رمادي", "أسود"],
         sizes: ["28", "30", "32", "34"],
-        image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800"
+        image: "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0010.jpg"
       },
       {
         id: 5,
@@ -434,7 +434,7 @@
         price: 680,
         colors: ["بيج", "زيتي", "أبيض"],
         sizes: ["M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800"
+        image: "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0011.jpg"
       },
       {
         id: 6,
@@ -444,7 +444,17 @@
         price: 850,
         colors: ["أسود نقي", "بيج غامق"],
         sizes: ["M", "L", "XL"],
-        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800"
+        image: "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0013(1).jpg"
+      },
+      {
+        id: 7,
+        name: "سويت شيرت كاجوال مينيمال",
+        category: "hoodie",
+        gender: "unisex",
+        price: 720,
+        colors: ["رمادي", "أسود"],
+        sizes: ["M", "L", "XL"],
+        image: "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0014.jpg"
       }
     ];
 
@@ -458,11 +468,31 @@
 
     let products = JSON.parse(localStorage.getItem('naz_products')) || initialProducts;
 
-    // مزامنة الصور المحدثة تلقائياً في حالة كانت محفوظة بروابط قديمة في المتصفح
-    if (products.length >= 3 && products[0].image.includes('unsplash')) {
+    // مزامنة وتحديث الروابط والصور فورياً في ذاكرة المتصفح
+    let updatedStorage = false;
+    if (products[0] && products[0].image.includes('unsplash')) {
       products[0].image = "https://ibb.co/99f8j8NZ";
       products[1].image = "https://ibb.co/Y4jDXRGq";
       products[2].image = "https://ibb.co/67rzJZHC";
+      updatedStorage = true;
+    }
+    if (products[3] && products[3].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0010.jpg") {
+      products[3].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0010.jpg";
+      updatedStorage = true;
+    }
+    if (products[4] && products[4].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0011.jpg") {
+      products[4].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0011.jpg";
+      updatedStorage = true;
+    }
+    if (products[5] && products[5].image !== "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0013(1).jpg") {
+      products[5].image = "https://raw.githubusercontent.com/ml1078733-design/Elwan/refs/heads/main/IMG-20261025-WA0013(1).jpg";
+      updatedStorage = true;
+    }
+    if (!products.some(p => p.id === 7)) {
+      products.push(initialProducts[6]);
+      updatedStorage = true;
+    }
+    if (updatedStorage) {
       localStorage.setItem('naz_products', JSON.stringify(products));
     }
 
@@ -837,4 +867,5 @@
     lucide.createIcons();
   </script>
 </body>
-          </html>
+  </html>
+  
